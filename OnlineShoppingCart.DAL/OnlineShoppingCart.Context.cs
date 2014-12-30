@@ -18,6 +18,7 @@ namespace OnlineShoppingCart.DAL
         public OnlineShoppingCartDbContext()
             : base("name=OnlineShoppingCartDbContext")
         {
+
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
