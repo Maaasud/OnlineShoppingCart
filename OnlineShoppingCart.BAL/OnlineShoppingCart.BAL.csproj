@@ -40,7 +40,7 @@
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="OnlineShoppingCart.DAL">
-      <HintPath>..\OnlineShoppingCart.DAL\bin\OnlineShoppingCart.DAL.dll</HintPath>
+      <HintPath>..\OnlineShoppingCart.DAL\obj\Debug\OnlineShoppingCart.DAL.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -71,14 +71,19 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Repository\AddressModal.cs" />
+    <Compile Include="Repository\CartModal.cs" />
+    <Compile Include="Repository\CategoryModal.cs" />
+    <Compile Include="Repository\CompanyModal.cs" />
+    <Compile Include="Repository\ContactModal.cs" />
+    <Compile Include="Repository\CreditCardModal.cs" />
+    <Compile Include="Repository\ProductModal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Address.cs" />
     <Compile Include="Repository\Company.cs" />
     <Compile Include="Repository\Contact.cs" />
     <Compile Include="Repository\CreditCard.cs" />
     <Compile Include="Repository\User.cs" />
-    <Compile Include="Repository\UserRole.cs" />
-    <Compile Include="Repository\UserType.cs" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
