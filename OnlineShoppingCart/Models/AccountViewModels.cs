@@ -7,6 +7,7 @@ namespace OnlineShoppingCart.Models
         [Required]
         [Display(Name = "User name")]
         public string UserName { get; set; }
+        ///
     }
 
     public class ManageUserViewModel
