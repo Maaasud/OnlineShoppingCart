@@ -23,6 +23,7 @@ namespace OnlineShoppingCart.Controllers
         public AccountController(UserManager<ApplicationUser> userManager)
         {
             UserManager = userManager;
+            int a = 5;
         }
 
         public UserManager<ApplicationUser> UserManager { get; private set; }
