@@ -13,6 +13,7 @@ namespace OnlineShoppingCart.Models
         public ApplicationDbContext()
             : base("DefaultConnection")
         {
+            ///
         }
     }
 }
