@@ -1,0 +1,37 @@
+﻿@model OnlineShoppingCart.BAL.Repository.User
+
+
+@using (Html.BeginForm("Save", "SignUp"))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-element" id="Name-form-element">
+        <strong>@Html.LabelFor(q => q.FirstName)</strong><br />
+        @Html.TextBoxFor(q => q.FirstName, new { placeholder = "First", @class = "form-control-short" })
+        @Html.TextBoxFor(q => q.LastName, new { placeholder = "Last", @class = "form-control-short" })
+        <br />@Html.ValidationMessageFor(q => q.FirstName)
+    </div>
+    <div class="form-element" id="email-form-element">
+        <strong>@Html.LabelFor(q => q.Contact.Email)</strong><br />
+        @Html.TextBoxFor(q => q.Contact.Email, new { placeholder = "Email", @class = "form-control" })
+        @Html.ValidationMessageFor(q => q.Contact.Email)
+    </div>
+    <div class="form-element" id="email-form-element">
+        <strong>@Html.LabelFor(q => q.Contact.Mobile)</strong><br />
+        @Html.TextBoxFor(q => q.Contact.Mobile, new { placeholder = "Mobile number", @class = "form-control" })
+        @Html.ValidationMessageFor(q => q.Contact.Mobile)
+    </div>
+    <div class="form-element" id="password-form-element">
+        <strong>@Html.LabelFor(q => q.Password)</strong><br />
+        @Html.PasswordFor(q => q.Password, new { placeholder = "Password", @class = "form-control" })
+        @Html.ValidationMessageFor(q => q.Password)
+    </div>
+    <div class="form-element" id="confirmpassword-form-element">
+        <strong>@Html.LabelFor(q => q.ConfirmPassword)</strong><br />
+        @Html.PasswordFor(q => q.ConfirmPassword, new { placeholder = "Confirm password", @class = "form-control" })
+        @Html.ValidationMessageFor(q => q.ConfirmPassword)
+    </div>
+   
+    <div class="form-element" id="submit-form-element">
+        <input type="submit" name="save" id="save" value="Register" class="btn btn-default" />
+    </div>
+}

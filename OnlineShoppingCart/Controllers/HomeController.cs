@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using OnlineShoppingCart.DAL;
+using OnlineShoppingCart.Model;
 
 namespace OnlineShoppingCart.Controllers
 {
@@ -14,11 +15,12 @@ namespace OnlineShoppingCart.Controllers
         // GET: /Default/
         public HomeController(OnlineShoppingCartDbContext context)
         {
-            _dbContext = context;
+            _dbContext = new OnlineShoppingCartDbContext();
         }
 
         public ActionResult Index()
         {
+            UserModel userModel = new UserModel(_dbContext);
             return View();
         }
 	}

@@ -1,22 +1,37 @@
-﻿@using Microsoft.AspNet.Identity
-@if (Request.IsAuthenticated)
-{
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+﻿<fieldset style="padding-left:20px;float:right">
+    <legend>Already registered, login here</legend>
+    @using (Html.BeginForm("Login", "SignUp", FormMethod.Post, new { @id = "lofinForm" }))
     {
-    @Html.AntiForgeryToken()
-
-    <ul class="nav navbar-nav navbar-right">
-        <li>
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Manage", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })
-        </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-    </ul>
+        @Html.AntiForgeryToken()
+        <div class="form-element" id="Name-form-element">
+            <strong>Email</strong>
+            @Html.TextBox("textboxEmail", "", new { placeholder = "Email", @class = "form-control" })
+        </div>
+        <div class="form-element" id="email-form-element">
+            <strong>Password</strong>
+            @Html.Password("textBoxPassword", "", new { placeholder = "Password", @class = "form-control" })
+        </div>
+        <div class="form-element" id="submit-form-element">
+            <input type="submit" name="login" id="login" value="Log In" class="btn btn-default" />
+        </div>
     }
-}
-else
-{
-    <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-    </ul>
-}
+</fieldset>
+
+<script>
+    @*$("#login").click(function () {
+        var emailId = $("#textboxEmail").val();
+        var password = $("#textBoxPassword").val();
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("Login", "SignUp")',
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            data: $('#lofinForm').serialize(),
+            success: function (data) {
+                alert(1);
+                window.location = "http://localhost:54009/Home/";
+            }
+        })
+    });*@
+</script>
