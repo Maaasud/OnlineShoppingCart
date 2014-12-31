@@ -1,4 +1,4 @@
-﻿@model OnlineShoppingCart.BAL.Repository.User
+﻿@model OnlineShoppingCart.Model.UserModel
 
 
 @using (Html.BeginForm("Save", "SignUp"))
@@ -14,6 +14,11 @@
         <strong>@Html.LabelFor(q => q.Contact.Email)</strong><br />
         @Html.TextBoxFor(q => q.Contact.Email, new { placeholder = "Email", @class = "form-control" })
         @Html.ValidationMessageFor(q => q.Contact.Email)
+    </div>
+    <div class="form-element" id="email-form-element">
+        <strong>@Html.LabelFor(q => q.Contact.ConfirmEmail)</strong><br />
+        @Html.TextBoxFor(q => q.Contact.ConfirmEmail, new { placeholder = "Email", @class = "form-control" })
+        @Html.ValidationMessageFor(q => q.Contact.ConfirmEmail)
     </div>
     <div class="form-element" id="email-form-element">
         <strong>@Html.LabelFor(q => q.Contact.Mobile)</strong><br />
@@ -34,4 +39,5 @@
     <div class="form-element" id="submit-form-element">
         <input type="submit" name="save" id="save" value="Register" class="btn btn-default" />
     </div>
+    <div>@ViewBag.Message</div>
 }

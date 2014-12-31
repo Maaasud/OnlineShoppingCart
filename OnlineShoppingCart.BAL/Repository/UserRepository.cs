@@ -7,11 +7,11 @@ using System.Web;
 
 namespace OnlineShoppingCart.BAL.Repository
 {
-    public class User
+    public class UserRepository
     {
         public int UserID { get; set; }
 
-        [DisplayName("Username")]
+        [DisplayName("My fullname is")]
         [Required(ErrorMessage = "You can't leave this empty.")]
         [DataType(DataType.Text)]
         public string FirstName { get; set; }
@@ -31,19 +31,17 @@ namespace OnlineShoppingCart.BAL.Repository
         [Compare("Password", ErrorMessage = "These passwords don't match.")]
         public string ConfirmPassword { get; set; }
 
-        [Required(ErrorMessage = "You can't leave this empty.")]
-        public Contact Contact { get; set; }
+        public ContactRepository Contact { get; set; }
 
-        public CreditCard CreditCardID { get; set; }
+        public CreditCardRepository CreditCardID { get; set; }
 
-        [Required(ErrorMessage = "You can't leave this empty.")]
-        public Address Address { get; set; }
+        public AddressRepository Address { get; set; }
 
-        public Company Company { get; set; }
+        public CompanyRepository Company { get; set; }
 
-        public UserType UserType { get; set; }
+        public UserTypeRepository UserType { get; set; }
 
-        public UserRole UserRole { get; set; }
+        public UserRoleRepository UserRole { get; set; }
 
         public bool IsActive { get; set; }
 

@@ -24,11 +24,16 @@ namespace OnlineShoppingCart.Controllers
         }
 
         [ValidateAntiForgeryToken]
-        public ActionResult Save()
+        public ActionResult Save(UserModel userModel)
         {
+            int userID = 0;
             if (ModelState.IsValid)
             {
-                
+                //save here
+                if (new UserModel(this._dbContext).Save(userModel, out userID))
+                {
+                    ViewBag.Message = "User inserted successfully";
+                }
             }
 
             return View("Index");
@@ -38,7 +43,7 @@ namespace OnlineShoppingCart.Controllers
         {
             string emailId = Request.Form["textboxEmail"];
             string password = Request.Form["textboxPassword"];
-            return RedirectToAction("","Home");
+            return RedirectToAction("", "Home");
         }
     }
 }

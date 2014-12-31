@@ -9,44 +9,68 @@ using OnlineShoppingCart.DAL;
 
 namespace OnlineShoppingCart.Model
 {
-    public class UserModel : User
+    public class UserModel : UserRepository
     {
         private OnlineShoppingCartDbContext _dbContext;
+
+        public UserModel() { }
 
         public UserModel(OnlineShoppingCartDbContext dbContext)
         {
             _dbContext = dbContext;
-
         }
 
-        public bool Save(out int userID)
+        public bool Save(UserModel userModel,out int userID)
         {
             userID = 0;
-            try
+            bool isSuccess = false;
+            //this._dbContext.Database.;
+            //System.Data.Common.DbTransaction transaction = this.context.Connection.BeginTransaction();
+            using (var transaction = _dbContext.Database.BeginTransaction())
             {
-                //DAL.Users
-                Users user = new Users();
-                user.FirstName = this.FirstName;
-                user.LastName = this.LastName;
-                
-                //user.Email = this.Email;
-                //user.Password = CommonClass.Encrypt(this.Password);
-                //DateTime birthDateTime = new DateTime(this.BirthYear, this.BirthMonth, this.BirthDay);
-                //user.Birthday = birthDateTime;
-                //user.Gender = this.Gender;
-                //user.IsVerified = false;
-                //this._entities.tblUser.Add(user);
-                //this._entities.SaveChanges();
+                try
+                {
+                    DAL.Contact contact = new DAL.Contact();
+                    contact.Email = userModel.Contact.Email;
+                    contact.Phone = userModel.Contact.Phone;
+                    contact.DateCreated = DateTime.Now;
+                    this._dbContext.Contact.Add(contact);
+                    this._dbContext.SaveChanges();
 
-                userID = user.UserID;
-                return true;
+                    Users user = new Users();
+                    user.FirstName = userModel.FirstName;
+                    user.LastName = userModel.LastName;
+                    user.Password = userModel.Password;
+                    user.ContactID = contact.ContactID;
+                    user.DateCreated = DateTime.Now;
+                    this._dbContext.Users.Add(user);
+                    this._dbContext.SaveChanges();
 
+                    userID = user.UserID;
+                    //Insert log that user is created
+
+                    transaction.Commit();
+                    transaction.Dispose();
+                    isSuccess = true;
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    isSuccess = false;
+                    throw ex;
+                }
             }
-            catch (Exception ex)
-            {
-                return false;
-                throw ex;
-            }
+
+            return isSuccess;
+            //user.Email = this.Email;
+            //user.Password = CommonClass.Encrypt(this.Password);
+            //DateTime birthDateTime = new DateTime(this.BirthYear, this.BirthMonth, this.BirthDay);
+            //user.Birthday = birthDateTime;
+            //user.Gender = this.Gender;
+            //user.IsVerified = false;
+            //this._entities.tblUser.Add(user);
+            //this._entities.SaveChanges();
+            
         }
 
         public bool Verify(int userID, bool isVerified)
