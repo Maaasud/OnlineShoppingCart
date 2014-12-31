@@ -50,7 +50,7 @@
       <HintPath>..\packages\Ninject.MVC3.3.2.1.0\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
     </Reference>
     <Reference Include="OnlineShoppingCart.DAL">
-      <HintPath>..\OnlineShoppingCart.DAL\bin\OnlineShoppingCart.DAL.dll</HintPath>
+      <HintPath>..\OnlineShoppingCart.DAL\obj\Debug\OnlineShoppingCart.DAL.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -227,6 +227,12 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OnlineShoppingCart.BAL\OnlineShoppingCart.BAL.csproj">
+      <Project>{624ec427-d6f7-456d-b5b6-3166fe8b38c7}</Project>
+      <Name>OnlineShoppingCart.BAL</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
