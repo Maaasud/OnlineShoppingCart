@@ -33,7 +33,7 @@ namespace OnlineShoppingCart.BAL.Repository
 
         public ContactRepository Contact { get; set; }
 
-        public CreditCardRepository CreditCardID { get; set; }
+        public CreditCardRepository CreditCard { get; set; }
 
         public AddressRepository Address { get; set; }
 
