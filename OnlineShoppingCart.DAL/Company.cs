@@ -23,14 +23,12 @@ namespace OnlineShoppingCart.DAL
         public int CompanyID { get; set; }
         public string CompanyName { get; set; }
         public int ContactID { get; set; }
-        public int AddressID { get; set; }
         public string Logo { get; set; }
         public Nullable<int> RateStar { get; set; }
         public System.DateTime DateCreated { get; set; }
         public Nullable<System.DateTime> DateModified { get; set; }
         public Nullable<System.DateTime> DateDeleted { get; set; }
     
-        public virtual Address Address { get; set; }
         public virtual Contact Contact { get; set; }
         public virtual ICollection<Product> Product { get; set; }
         public virtual ICollection<Users> Users { get; set; }

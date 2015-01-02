@@ -5,10 +5,15 @@ namespace OnlineShoppingCart.BAL.Repository
     using System.Collections.Generic;
     using System.Linq;
     using System.Web;
+    using OnlineShoppingCart.DAL;
 
     public class AddressRepository
     {
         public int AddressID { get; set; }
+
+        public int UserID { get; set; }
+
+        public Users User { get; set; }
 
         public string AddressType { get; set; }
 

@@ -26,8 +26,9 @@ namespace OnlineShoppingCart.DAL
         public System.DateTime DateCreated { get; set; }
         public Nullable<System.DateTime> DateModified { get; set; }
         public Nullable<System.DateTime> DateDeleted { get; set; }
+        public string ShippingType { get; set; }
     
-        public virtual Users Users { get; set; }
         public virtual ICollection<OrderItem> OrderItem { get; set; }
+        public virtual Users Users { get; set; }
     }
 }

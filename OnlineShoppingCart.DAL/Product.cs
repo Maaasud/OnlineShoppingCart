@@ -38,10 +38,10 @@ namespace OnlineShoppingCart.DAL
         public Nullable<System.DateTime> DateDeleted { get; set; }
     
         public virtual Category Category { get; set; }
-        public virtual Company Company { get; set; }
         public virtual ICollection<OrderItem> OrderItem { get; set; }
         public virtual SubCategory SubCategory { get; set; }
-        public virtual Users Users { get; set; }
         public virtual ICollection<Sale> Sale { get; set; }
+        public virtual Users Users { get; set; }
+        public virtual Company Company { get; set; }
     }
 }

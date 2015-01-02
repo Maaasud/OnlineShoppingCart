@@ -49,8 +49,6 @@ namespace OnlineShoppingCart.BAL.Repository
 
         public CreditCard CreditCard { get; set; }
 
-        public Address Address { get; set; }
-
         public Company Company { get; set; }
 
         public UserType UserType { get; set; }

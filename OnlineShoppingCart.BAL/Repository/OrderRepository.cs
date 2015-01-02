@@ -19,6 +19,8 @@ namespace OnlineShoppingCart.BAL.Repository
 
         public bool IsCheckout { get; set; }
 
+        public string ShippingType { get; set; }
+
         public DateTime DateCreated { get; set; }
 
         public DateTime DateModified { get; set; }

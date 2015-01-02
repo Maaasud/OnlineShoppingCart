@@ -16,8 +16,8 @@ namespace OnlineShoppingCart.DAL
     {
         public Contact()
         {
-            this.Company = new HashSet<Company>();
             this.Users = new HashSet<Users>();
+            this.Company = new HashSet<Company>();
         }
     
         public int ContactID { get; set; }
@@ -28,7 +28,7 @@ namespace OnlineShoppingCart.DAL
         public Nullable<System.DateTime> DateModified { get; set; }
         public Nullable<System.DateTime> DateDeleted { get; set; }
     
-        public virtual ICollection<Company> Company { get; set; }
         public virtual ICollection<Users> Users { get; set; }
+        public virtual ICollection<Company> Company { get; set; }
     }
 }

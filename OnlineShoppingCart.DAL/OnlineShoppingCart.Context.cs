@@ -25,10 +25,8 @@ namespace OnlineShoppingCart.DAL
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Address> Address { get; set; }
         public virtual DbSet<CardType> CardType { get; set; }
         public virtual DbSet<Category> Category { get; set; }
-        public virtual DbSet<Company> Company { get; set; }
         public virtual DbSet<Contact> Contact { get; set; }
         public virtual DbSet<CreditCard> CreditCard { get; set; }
         public virtual DbSet<Order> Order { get; set; }
@@ -38,7 +36,9 @@ namespace OnlineShoppingCart.DAL
         public virtual DbSet<Setting> Setting { get; set; }
         public virtual DbSet<SubCategory> SubCategory { get; set; }
         public virtual DbSet<UserRole> UserRole { get; set; }
-        public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<UserType> UserType { get; set; }
+        public virtual DbSet<Address> Address { get; set; }
+        public virtual DbSet<Users> Users { get; set; }
+        public virtual DbSet<Company> Company { get; set; }
     }
 }

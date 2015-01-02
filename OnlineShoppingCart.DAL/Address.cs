@@ -14,13 +14,8 @@ namespace OnlineShoppingCart.DAL
     
     public partial class Address
     {
-        public Address()
-        {
-            this.Company = new HashSet<Company>();
-            this.Users = new HashSet<Users>();
-        }
-    
         public int AddressID { get; set; }
+        public int UserID { get; set; }
         public string AddressType { get; set; }
         public string Street1 { get; set; }
         public string Street2 { get; set; }
@@ -32,7 +27,6 @@ namespace OnlineShoppingCart.DAL
         public Nullable<System.DateTime> DateModified { get; set; }
         public Nullable<System.DateTime> DateDeleted { get; set; }
     
-        public virtual ICollection<Company> Company { get; set; }
-        public virtual ICollection<Users> Users { get; set; }
+        public virtual Users Users { get; set; }
     }
 }
