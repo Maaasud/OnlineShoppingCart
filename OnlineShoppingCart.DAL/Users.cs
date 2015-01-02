@@ -20,6 +20,7 @@ namespace OnlineShoppingCart.DAL
             this.Order = new HashSet<Order>();
             this.Product = new HashSet<Product>();
             this.Sale = new HashSet<Sale>();
+            this.Category = new HashSet<Category>();
         }
     
         public int UserID { get; set; }
@@ -46,5 +47,6 @@ namespace OnlineShoppingCart.DAL
         public virtual UserRole UserRole { get; set; }
         public virtual UserType UserType { get; set; }
         public virtual Company Company { get; set; }
+        public virtual ICollection<Category> Category { get; set; }
     }
 }

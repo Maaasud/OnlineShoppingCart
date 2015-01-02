@@ -45,15 +45,25 @@ namespace OnlineShoppingCart.BAL.Repository
         [Compare("Password", ErrorMessage = "These passwords don't match.")]
         public string ConfirmPassword { get; set; }
 
+        public int CantactID { get; set; }
+
         public Contact Contact { get; set; }
 
         public CreditCard CreditCard { get; set; }
 
+        public int CreditCardID { get; set; }
+
         public Company Company { get; set; }
+
+        public int CompanyID { get; set; }
 
         public UserType UserType { get; set; }
 
+        public int UserTypeID { get; set; }
+
         public UserRole UserRole { get; set; }
+
+        public int UserRoleID { get; set; }
 
         public bool IsActive { get; set; }
 

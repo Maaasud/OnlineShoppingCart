@@ -38,6 +38,7 @@
         <AssociationConnector Association="OnlineShoppingCart.DAL.FK__Company__Contact__29572725" />
         <AssociationConnector Association="OnlineShoppingCart.DAL.FK__Product__Company__3E52440B" />
         <AssociationConnector Association="OnlineShoppingCart.DAL.FK__Users__CompanyID__30F848ED" />
+        <AssociationConnector Association="OnlineShoppingCart.DAL.FK__Category__UserID__2E1BDC42" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

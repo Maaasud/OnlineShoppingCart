@@ -6,6 +6,7 @@ namespace OnlineShoppingCart.BAL
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
     using System.Web;
+    using OnlineShoppingCart.DAL;
 
     public class CategoryRepository
     {
@@ -13,6 +14,10 @@ namespace OnlineShoppingCart.BAL
 
         [Required(ErrorMessage = "You can't leave this empty.")]
         public string Name { get; set; }
+
+        public int UserID { get; set; }
+
+        public Users User { get; set; }
 
         public string Description { get; set; }
 

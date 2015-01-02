@@ -37,6 +37,7 @@
             <PropertyRef Name="CategoryID" />
           </Key>
           <Property Name="CategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="50" />
           <Property Name="Description" Type="varchar" MaxLength="500" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
@@ -205,7 +206,7 @@
           <Property Name="DateModified" Type="datetime" />
           <Property Name="DateDeleted" Type="datetime" />
         </EntityType>
-        <Association Name="FK__Address__UserID__38996AB5">
+        <Association Name="FK__Address__UserID__398D8EEE">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Address" Type="Self.Address" Multiplicity="*" />
           <ReferentialConstraint>
@@ -217,7 +218,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Company__Contact__29572725">
+        <Association Name="FK__Category__UserID__2E1BDC42">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Category" Type="Self.Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Company__Contact__1ED998B2">
           <End Role="Contact" Type="Self.Contact" Multiplicity="1" />
           <End Role="Company" Type="Self.Company" Multiplicity="*" />
           <ReferentialConstraint>
@@ -229,7 +242,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__CreditCar__CardT__15502E78">
+        <Association Name="FK__CreditCar__CardT__0AD2A005">
           <End Role="CardType" Type="Self.CardType" Multiplicity="1" />
           <End Role="CreditCard" Type="Self.CreditCard" Multiplicity="*" />
           <ReferentialConstraint>
@@ -241,7 +254,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Order__UserID__4D94879B">
+        <Association Name="FK__Order__UserID__4E88ABD4">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
           <ReferentialConstraint>
@@ -253,7 +266,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__OrderItem__Order__534D60F1">
+        <Association Name="FK__OrderItem__Order__5441852A">
           <End Role="Order" Type="Self.Order" Multiplicity="1" />
           <End Role="OrderItem" Type="Self.OrderItem" Multiplicity="*" />
           <ReferentialConstraint>
@@ -265,7 +278,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__OrderItem__Produ__5441852A">
+        <Association Name="FK__OrderItem__Produ__5535A963">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="OrderItem" Type="Self.OrderItem" Multiplicity="*" />
           <ReferentialConstraint>
@@ -277,7 +290,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Product__Categor__3F466844">
+        <Association Name="FK__Product__Categor__403A8C7D">
           <End Role="Category" Type="Self.Category" Multiplicity="1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
@@ -289,7 +302,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Product__Company__3E52440B">
+        <Association Name="FK__Product__Company__3F466844">
           <End Role="Company" Type="Self.Company" Multiplicity="1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
@@ -301,7 +314,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Product__SubCate__403A8C7D">
+        <Association Name="FK__Product__SubCate__412EB0B6">
           <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="0..1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
@@ -313,7 +326,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Product__UserID__412EB0B6">
+        <Association Name="FK__Product__UserID__4222D4EF">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
@@ -325,7 +338,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sale__ProductID__46E78A0C">
+        <Association Name="FK__Sale__ProductID__47DBAE45">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
           <ReferentialConstraint>
@@ -337,7 +350,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sale__UserID__47DBAE45">
+        <Association Name="FK__Sale__UserID__48CFD27E">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
           <ReferentialConstraint>
@@ -349,7 +362,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__SubCatego__Categ__0AD2A005">
+        <Association Name="FK__SubCatego__Categ__33D4B598">
           <End Role="Category" Type="Self.Category" Multiplicity="1" />
           <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="*" />
           <ReferentialConstraint>
@@ -361,7 +374,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Users__CompanyID__30F848ED">
+        <Association Name="FK__Users__CompanyID__267ABA7A">
           <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
           <End Role="Users" Type="Self.Users" Multiplicity="*" />
           <ReferentialConstraint>
@@ -373,7 +386,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Users__ContactID__2F10007B">
+        <Association Name="FK__Users__ContactID__24927208">
           <End Role="Contact" Type="Self.Contact" Multiplicity="0..1" />
           <End Role="Users" Type="Self.Users" Multiplicity="*" />
           <ReferentialConstraint>
@@ -385,7 +398,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Users__CreditCar__300424B4">
+        <Association Name="FK__Users__CreditCar__25869641">
           <End Role="CreditCard" Type="Self.CreditCard" Multiplicity="0..1" />
           <End Role="Users" Type="Self.Users" Multiplicity="*" />
           <ReferentialConstraint>
@@ -397,7 +410,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Users__UserRoleI__32E0915F">
+        <Association Name="FK__Users__UserRoleI__286302EC">
           <End Role="UserRole" Type="Self.UserRole" Multiplicity="0..1" />
           <End Role="Users" Type="Self.Users" Multiplicity="*" />
           <ReferentialConstraint>
@@ -409,7 +422,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Users__UserTypeI__31EC6D26">
+        <Association Name="FK__Users__UserTypeI__276EDEB3">
           <End Role="UserType" Type="Self.UserType" Multiplicity="0..1" />
           <End Role="Users" Type="Self.Users" Multiplicity="*" />
           <ReferentialConstraint>
@@ -437,75 +450,79 @@
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserType" EntityType="Self.UserType" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Address__UserID__38996AB5" Association="Self.FK__Address__UserID__38996AB5">
+          <AssociationSet Name="FK__Address__UserID__398D8EEE" Association="Self.FK__Address__UserID__398D8EEE">
             <End Role="Users" EntitySet="Users" />
             <End Role="Address" EntitySet="Address" />
           </AssociationSet>
-          <AssociationSet Name="FK__Company__Contact__29572725" Association="Self.FK__Company__Contact__29572725">
+          <AssociationSet Name="FK__Category__UserID__2E1BDC42" Association="Self.FK__Category__UserID__2E1BDC42">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Category" EntitySet="Category" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Company__Contact__1ED998B2" Association="Self.FK__Company__Contact__1ED998B2">
             <End Role="Contact" EntitySet="Contact" />
             <End Role="Company" EntitySet="Company" />
           </AssociationSet>
-          <AssociationSet Name="FK__CreditCar__CardT__15502E78" Association="Self.FK__CreditCar__CardT__15502E78">
+          <AssociationSet Name="FK__CreditCar__CardT__0AD2A005" Association="Self.FK__CreditCar__CardT__0AD2A005">
             <End Role="CardType" EntitySet="CardType" />
             <End Role="CreditCard" EntitySet="CreditCard" />
           </AssociationSet>
-          <AssociationSet Name="FK__Order__UserID__4D94879B" Association="Self.FK__Order__UserID__4D94879B">
+          <AssociationSet Name="FK__Order__UserID__4E88ABD4" Association="Self.FK__Order__UserID__4E88ABD4">
             <End Role="Users" EntitySet="Users" />
             <End Role="Order" EntitySet="Order" />
           </AssociationSet>
-          <AssociationSet Name="FK__OrderItem__Order__534D60F1" Association="Self.FK__OrderItem__Order__534D60F1">
+          <AssociationSet Name="FK__OrderItem__Order__5441852A" Association="Self.FK__OrderItem__Order__5441852A">
             <End Role="Order" EntitySet="Order" />
             <End Role="OrderItem" EntitySet="OrderItem" />
           </AssociationSet>
-          <AssociationSet Name="FK__OrderItem__Produ__5441852A" Association="Self.FK__OrderItem__Produ__5441852A">
+          <AssociationSet Name="FK__OrderItem__Produ__5535A963" Association="Self.FK__OrderItem__Produ__5535A963">
             <End Role="Product" EntitySet="Product" />
             <End Role="OrderItem" EntitySet="OrderItem" />
           </AssociationSet>
-          <AssociationSet Name="FK__Product__Categor__3F466844" Association="Self.FK__Product__Categor__3F466844">
+          <AssociationSet Name="FK__Product__Categor__403A8C7D" Association="Self.FK__Product__Categor__403A8C7D">
             <End Role="Category" EntitySet="Category" />
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
-          <AssociationSet Name="FK__Product__Company__3E52440B" Association="Self.FK__Product__Company__3E52440B">
+          <AssociationSet Name="FK__Product__Company__3F466844" Association="Self.FK__Product__Company__3F466844">
             <End Role="Company" EntitySet="Company" />
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
-          <AssociationSet Name="FK__Product__SubCate__403A8C7D" Association="Self.FK__Product__SubCate__403A8C7D">
+          <AssociationSet Name="FK__Product__SubCate__412EB0B6" Association="Self.FK__Product__SubCate__412EB0B6">
             <End Role="SubCategory" EntitySet="SubCategory" />
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
-          <AssociationSet Name="FK__Product__UserID__412EB0B6" Association="Self.FK__Product__UserID__412EB0B6">
+          <AssociationSet Name="FK__Product__UserID__4222D4EF" Association="Self.FK__Product__UserID__4222D4EF">
             <End Role="Users" EntitySet="Users" />
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sale__ProductID__46E78A0C" Association="Self.FK__Sale__ProductID__46E78A0C">
+          <AssociationSet Name="FK__Sale__ProductID__47DBAE45" Association="Self.FK__Sale__ProductID__47DBAE45">
             <End Role="Product" EntitySet="Product" />
             <End Role="Sale" EntitySet="Sale" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sale__UserID__47DBAE45" Association="Self.FK__Sale__UserID__47DBAE45">
+          <AssociationSet Name="FK__Sale__UserID__48CFD27E" Association="Self.FK__Sale__UserID__48CFD27E">
             <End Role="Users" EntitySet="Users" />
             <End Role="Sale" EntitySet="Sale" />
           </AssociationSet>
-          <AssociationSet Name="FK__SubCatego__Categ__0AD2A005" Association="Self.FK__SubCatego__Categ__0AD2A005">
+          <AssociationSet Name="FK__SubCatego__Categ__33D4B598" Association="Self.FK__SubCatego__Categ__33D4B598">
             <End Role="Category" EntitySet="Category" />
             <End Role="SubCategory" EntitySet="SubCategory" />
           </AssociationSet>
-          <AssociationSet Name="FK__Users__CompanyID__30F848ED" Association="Self.FK__Users__CompanyID__30F848ED">
+          <AssociationSet Name="FK__Users__CompanyID__267ABA7A" Association="Self.FK__Users__CompanyID__267ABA7A">
             <End Role="Company" EntitySet="Company" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="FK__Users__ContactID__2F10007B" Association="Self.FK__Users__ContactID__2F10007B">
+          <AssociationSet Name="FK__Users__ContactID__24927208" Association="Self.FK__Users__ContactID__24927208">
             <End Role="Contact" EntitySet="Contact" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="FK__Users__CreditCar__300424B4" Association="Self.FK__Users__CreditCar__300424B4">
+          <AssociationSet Name="FK__Users__CreditCar__25869641" Association="Self.FK__Users__CreditCar__25869641">
             <End Role="CreditCard" EntitySet="CreditCard" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="FK__Users__UserRoleI__32E0915F" Association="Self.FK__Users__UserRoleI__32E0915F">
+          <AssociationSet Name="FK__Users__UserRoleI__286302EC" Association="Self.FK__Users__UserRoleI__286302EC">
             <End Role="UserRole" EntitySet="UserRole" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="FK__Users__UserTypeI__31EC6D26" Association="Self.FK__Users__UserTypeI__31EC6D26">
+          <AssociationSet Name="FK__Users__UserTypeI__276EDEB3" Association="Self.FK__Users__UserTypeI__276EDEB3">
             <End Role="UserType" EntitySet="UserType" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
@@ -537,6 +554,8 @@
           <Property Name="DateDeleted" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Product" Relationship="Self.FK__Product__Categor__403A8C7D" FromRole="Category" ToRole="Product" />
           <NavigationProperty Name="SubCategory" Relationship="Self.FK__SubCatego__Categ__0AD2A005" FromRole="Category" ToRole="SubCategory" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="OnlineShoppingCart.DAL.FK__Category__UserID__2E1BDC42" FromRole="Category" ToRole="Users" />
         </EntityType>
         <EntityType Name="Contact">
           <Key>
@@ -860,6 +879,10 @@
             <End Role="Company" EntitySet="Company" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
+          <AssociationSet Name="FK__Category__UserID__2E1BDC42" Association="OnlineShoppingCart.DAL.FK__Category__UserID__2E1BDC42">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Category" EntitySet="Category" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Address">
           <Key>
@@ -906,6 +929,7 @@
           <NavigationProperty Name="UserRole" Relationship="OnlineShoppingCart.DAL.FK__Users__UserRoleI__32E0915F" FromRole="Users" ToRole="UserRole" />
           <NavigationProperty Name="UserType" Relationship="OnlineShoppingCart.DAL.FK__Users__UserTypeI__31EC6D26" FromRole="Users" ToRole="UserType" />
           <NavigationProperty Name="Company" Relationship="OnlineShoppingCart.DAL.FK__Users__CompanyID__30F848ED" FromRole="Users" ToRole="Company" />
+          <NavigationProperty Name="Category" Relationship="OnlineShoppingCart.DAL.FK__Category__UserID__2E1BDC42" FromRole="Users" ToRole="Category" />
         </EntityType>
         <Association Name="FK__Address__UserID__38996AB5">
           <End Type="OnlineShoppingCart.DAL.Users" Role="Users" Multiplicity="1" />
@@ -1055,6 +1079,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK__Category__UserID__2E1BDC42">
+          <End Type="OnlineShoppingCart.DAL.Users" Role="Users" Multiplicity="1" />
+          <End Type="OnlineShoppingCart.DAL.Category" Role="Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1075,6 +1111,7 @@
           <EntitySetMapping Name="Category">
             <EntityTypeMapping TypeName="OnlineShoppingCart.DAL.Category">
               <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Description" ColumnName="Description" />

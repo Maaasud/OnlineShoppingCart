@@ -26,8 +26,10 @@ namespace OnlineShoppingCart.DAL
         public System.DateTime DateCreated { get; set; }
         public Nullable<System.DateTime> DateModified { get; set; }
         public Nullable<System.DateTime> DateDeleted { get; set; }
+        public int UserID { get; set; }
     
         public virtual ICollection<Product> Product { get; set; }
         public virtual ICollection<SubCategory> SubCategory { get; set; }
+        public virtual Users Users { get; set; }
     }
 }
