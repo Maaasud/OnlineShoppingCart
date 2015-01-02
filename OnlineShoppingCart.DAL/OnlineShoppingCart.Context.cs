@@ -34,11 +34,11 @@ namespace OnlineShoppingCart.DAL
         public virtual DbSet<Order> Order { get; set; }
         public virtual DbSet<OrderItem> OrderItem { get; set; }
         public virtual DbSet<Product> Product { get; set; }
+        public virtual DbSet<Sale> Sale { get; set; }
         public virtual DbSet<Setting> Setting { get; set; }
         public virtual DbSet<SubCategory> SubCategory { get; set; }
         public virtual DbSet<UserRole> UserRole { get; set; }
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<UserType> UserType { get; set; }
-        public virtual DbSet<Sale> Sale { get; set; }
     }
 }

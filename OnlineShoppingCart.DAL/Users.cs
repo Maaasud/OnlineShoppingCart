@@ -43,8 +43,8 @@ namespace OnlineShoppingCart.DAL
         public virtual CreditCard CreditCard { get; set; }
         public virtual ICollection<Order> Order { get; set; }
         public virtual ICollection<Product> Product { get; set; }
+        public virtual ICollection<Sale> Sale { get; set; }
         public virtual UserRole UserRole { get; set; }
         public virtual UserType UserType { get; set; }
-        public virtual ICollection<Sale> Sale { get; set; }
     }
 }
