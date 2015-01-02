@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="OnlineShoppingCart.DAL.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="OnlineShoppingCart.DAL.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Address">
           <Key>
             <PropertyRef Name="AddressID" />
@@ -21,14 +21,12 @@
           <Property Name="DateModified" Type="datetime" />
           <Property Name="DateDeleted" Type="datetime" />
         </EntityType>
-        <EntityType Name="Cart">
+        <EntityType Name="CardType">
           <Key>
-            <PropertyRef Name="CartID" />
+            <PropertyRef Name="CardTypeID" />
           </Key>
-          <Property Name="CartID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ProductID" Type="int" Nullable="false" />
-          <Property Name="UnitCount" Type="int" />
-          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="CardTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="varchar" MaxLength="20" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateModified" Type="datetime" />
           <Property Name="DateDeleted" Type="datetime" />
@@ -52,6 +50,8 @@
           <Property Name="CompanyName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="ContactID" Type="int" Nullable="false" />
           <Property Name="AddressID" Type="int" Nullable="false" />
+          <Property Name="Logo" Type="varchar" MaxLength="50" />
+          <Property Name="RateStar" Type="int" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateModified" Type="datetime" />
           <Property Name="DateDeleted" Type="datetime" />
@@ -61,7 +61,6 @@
             <PropertyRef Name="ContactID" />
           </Key>
           <Property Name="ContactID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Phone" Type="varchar" MaxLength="50" />
           <Property Name="Mobile" Type="varchar" MaxLength="50" />
           <Property Name="Website" Type="varchar" MaxLength="50" />
@@ -77,6 +76,31 @@
           <Property Name="CardNumber" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="ExpirationDate" Type="datetime" Nullable="false" />
           <Property Name="CSC" Type="varchar" MaxLength="3" Nullable="false" />
+          <Property Name="CardTypeID" Type="int" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" />
+          <Property Name="DateDeleted" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="TotalPrice" Type="int" />
+          <Property Name="IsCheckout" Type="bit" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateModified" Type="datetime" />
+          <Property Name="DateDeleted" Type="datetime" />
+        </EntityType>
+        <EntityType Name="OrderItem">
+          <Key>
+            <PropertyRef Name="OrderItemID" />
+          </Key>
+          <Property Name="OrderItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderID" Type="int" Nullable="false" />
+          <Property Name="ProductID" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="int" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateModified" Type="datetime" />
           <Property Name="DateDeleted" Type="datetime" />
@@ -96,6 +120,7 @@
           <Property Name="QunatityInStock" Type="int" />
           <Property Name="UnitPrice" Type="int" />
           <Property Name="Image" Type="nvarchar(max)" />
+          <Property Name="Size" Type="float" />
           <Property Name="IsPosted" Type="bit" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateModified" Type="datetime" />
@@ -103,13 +128,13 @@
         </EntityType>
         <EntityType Name="Sale">
           <Key>
-            <PropertyRef Name="SalesID" />
+            <PropertyRef Name="SaleID" />
           </Key>
-          <Property Name="SalesID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SaleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductID" Type="int" Nullable="false" />
           <Property Name="UserID" Type="int" Nullable="false" />
-          <Property Name="UnitSold" Type="int" />
-          <Property Name="Amount" Type="int" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="TotalPrice" Type="int" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
           <Property Name="DateModified" Type="datetime" />
           <Property Name="DateDeleted" Type="datetime" />
@@ -155,7 +180,8 @@
           <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="FirstName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="LastName" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="ContactID" Type="int" />
           <Property Name="CreditCardID" Type="int" />
           <Property Name="AddressID" Type="int" />
@@ -179,31 +205,7 @@
           <Property Name="DateModified" Type="datetime" />
           <Property Name="DateDeleted" Type="datetime" />
         </EntityType>
-        <Association Name="FK__Cart__ProductID__48CFD27E">
-          <End Role="Product" Type="Self.Product" Multiplicity="1" />
-          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="ProductID" />
-            </Principal>
-            <Dependent Role="Cart">
-              <PropertyRef Name="ProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Cart__UserID__49C3F6B7">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="Cart">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Company__Address__29572725">
+        <Association Name="FK__Company__Address__2F10007B">
           <End Role="Address" Type="Self.Address" Multiplicity="1" />
           <End Role="Company" Type="Self.Company" Multiplicity="*" />
           <ReferentialConstraint>
@@ -215,7 +217,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Company__Contact__286302EC">
+        <Association Name="FK__Company__Contact__2E1BDC42">
           <End Role="Contact" Type="Self.Contact" Multiplicity="1" />
           <End Role="Company" Type="Self.Company" Multiplicity="*" />
           <ReferentialConstraint>
@@ -227,7 +229,55 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Product__Categor__3A81B327">
+        <Association Name="FK__CreditCar__CardT__1A14E395">
+          <End Role="CardType" Type="Self.CardType" Multiplicity="1" />
+          <End Role="CreditCard" Type="Self.CreditCard" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CardType">
+              <PropertyRef Name="CardTypeID" />
+            </Principal>
+            <Dependent Role="CreditCard">
+              <PropertyRef Name="CardTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Order__UserID__4E88ABD4">
+          <End Role="Users" Type="Self.Users" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderItem__Order__5441852A">
+          <End Role="Order" Type="Self.Order" Multiplicity="1" />
+          <End Role="OrderItem" Type="Self.OrderItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="OrderItem">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderItem__Produ__5535A963">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="OrderItem" Type="Self.OrderItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="OrderItem">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__Categor__403A8C7D">
           <End Role="Category" Type="Self.Category" Multiplicity="1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
@@ -239,7 +289,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Product__Company__398D8EEE">
+        <Association Name="FK__Product__Company__3F466844">
           <End Role="Company" Type="Self.Company" Multiplicity="1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
@@ -251,7 +301,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Product__SubCate__3B75D760">
+        <Association Name="FK__Product__SubCate__412EB0B6">
           <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="0..1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
@@ -263,7 +313,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Product__UserID__3C69FB99">
+        <Association Name="FK__Product__UserID__4222D4EF">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
           <ReferentialConstraint>
@@ -275,7 +325,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sale__ProductID__4222D4EF">
+        <Association Name="FK__Sale__ProductID__47DBAE45">
           <End Role="Product" Type="Self.Product" Multiplicity="1" />
           <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
           <ReferentialConstraint>
@@ -287,7 +337,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sale__UserID__4316F928">
+        <Association Name="FK__Sale__UserID__48CFD27E">
           <End Role="Users" Type="Self.Users" Multiplicity="1" />
           <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
           <ReferentialConstraint>
@@ -311,7 +361,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Users__AddressID__30F848ED">
+        <Association Name="FK__Users__AddressID__36B12243">
           <End Role="CreditCard" Type="Self.CreditCard" Multiplicity="0..1" />
           <End Role="Users" Type="Self.Users" Multiplicity="*" />
           <ReferentialConstraint>
@@ -323,7 +373,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Users__CompanyID__31EC6D26">
+        <Association Name="FK__Users__CompanyID__37A5467C">
           <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
           <End Role="Users" Type="Self.Users" Multiplicity="*" />
           <ReferentialConstraint>
@@ -335,7 +385,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Users__ContactID__2F10007B">
+        <Association Name="FK__Users__ContactID__34C8D9D1">
           <End Role="Contact" Type="Self.Contact" Multiplicity="0..1" />
           <End Role="Users" Type="Self.Users" Multiplicity="*" />
           <ReferentialConstraint>
@@ -347,7 +397,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Users__CreditCar__300424B4">
+        <Association Name="FK__Users__CreditCar__35BCFE0A">
           <End Role="Address" Type="Self.Address" Multiplicity="0..1" />
           <End Role="Users" Type="Self.Users" Multiplicity="*" />
           <ReferentialConstraint>
@@ -359,7 +409,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Users__UserRoleI__33D4B598">
+        <Association Name="FK__Users__UserRoleI__398D8EEE">
           <End Role="UserRole" Type="Self.UserRole" Multiplicity="0..1" />
           <End Role="Users" Type="Self.Users" Multiplicity="*" />
           <ReferentialConstraint>
@@ -371,7 +421,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Users__UserTypeI__32E0915F">
+        <Association Name="FK__Users__UserTypeI__38996AB5">
           <End Role="UserType" Type="Self.UserType" Multiplicity="0..1" />
           <End Role="Users" Type="Self.Users" Multiplicity="*" />
           <ReferentialConstraint>
@@ -385,11 +435,13 @@
         </Association>
         <EntityContainer Name="OnlineShoppingCartDALStoreContainer">
           <EntitySet Name="Address" EntityType="Self.Address" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Cart" EntityType="Self.Cart" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CardType" EntityType="Self.CardType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Contact" EntityType="Self.Contact" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CreditCard" EntityType="Self.CreditCard" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderItem" EntityType="Self.OrderItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Sale" EntityType="Self.Sale" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Setting" EntityType="Self.Setting" Schema="dbo" store:Type="Tables" />
@@ -397,43 +449,51 @@
           <EntitySet Name="UserRole" EntityType="Self.UserRole" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="UserType" EntityType="Self.UserType" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Cart__ProductID__48CFD27E" Association="Self.FK__Cart__ProductID__48CFD27E">
-            <End Role="Product" EntitySet="Product" />
-            <End Role="Cart" EntitySet="Cart" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Cart__UserID__49C3F6B7" Association="Self.FK__Cart__UserID__49C3F6B7">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Cart" EntitySet="Cart" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Company__Address__29572725" Association="Self.FK__Company__Address__29572725">
+          <AssociationSet Name="FK__Company__Address__2F10007B" Association="Self.FK__Company__Address__2F10007B">
             <End Role="Address" EntitySet="Address" />
             <End Role="Company" EntitySet="Company" />
           </AssociationSet>
-          <AssociationSet Name="FK__Company__Contact__286302EC" Association="Self.FK__Company__Contact__286302EC">
+          <AssociationSet Name="FK__Company__Contact__2E1BDC42" Association="Self.FK__Company__Contact__2E1BDC42">
             <End Role="Contact" EntitySet="Contact" />
             <End Role="Company" EntitySet="Company" />
           </AssociationSet>
-          <AssociationSet Name="FK__Product__Categor__3A81B327" Association="Self.FK__Product__Categor__3A81B327">
+          <AssociationSet Name="FK__CreditCar__CardT__1A14E395" Association="Self.FK__CreditCar__CardT__1A14E395">
+            <End Role="CardType" EntitySet="CardType" />
+            <End Role="CreditCard" EntitySet="CreditCard" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Order__UserID__4E88ABD4" Association="Self.FK__Order__UserID__4E88ABD4">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderItem__Order__5441852A" Association="Self.FK__OrderItem__Order__5441852A">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="OrderItem" EntitySet="OrderItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderItem__Produ__5535A963" Association="Self.FK__OrderItem__Produ__5535A963">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="OrderItem" EntitySet="OrderItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__Categor__403A8C7D" Association="Self.FK__Product__Categor__403A8C7D">
             <End Role="Category" EntitySet="Category" />
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
-          <AssociationSet Name="FK__Product__Company__398D8EEE" Association="Self.FK__Product__Company__398D8EEE">
+          <AssociationSet Name="FK__Product__Company__3F466844" Association="Self.FK__Product__Company__3F466844">
             <End Role="Company" EntitySet="Company" />
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
-          <AssociationSet Name="FK__Product__SubCate__3B75D760" Association="Self.FK__Product__SubCate__3B75D760">
+          <AssociationSet Name="FK__Product__SubCate__412EB0B6" Association="Self.FK__Product__SubCate__412EB0B6">
             <End Role="SubCategory" EntitySet="SubCategory" />
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
-          <AssociationSet Name="FK__Product__UserID__3C69FB99" Association="Self.FK__Product__UserID__3C69FB99">
+          <AssociationSet Name="FK__Product__UserID__4222D4EF" Association="Self.FK__Product__UserID__4222D4EF">
             <End Role="Users" EntitySet="Users" />
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sale__ProductID__4222D4EF" Association="Self.FK__Sale__ProductID__4222D4EF">
+          <AssociationSet Name="FK__Sale__ProductID__47DBAE45" Association="Self.FK__Sale__ProductID__47DBAE45">
             <End Role="Product" EntitySet="Product" />
             <End Role="Sale" EntitySet="Sale" />
           </AssociationSet>
-          <AssociationSet Name="FK__Sale__UserID__4316F928" Association="Self.FK__Sale__UserID__4316F928">
+          <AssociationSet Name="FK__Sale__UserID__48CFD27E" Association="Self.FK__Sale__UserID__48CFD27E">
             <End Role="Users" EntitySet="Users" />
             <End Role="Sale" EntitySet="Sale" />
           </AssociationSet>
@@ -441,36 +501,128 @@
             <End Role="Category" EntitySet="Category" />
             <End Role="SubCategory" EntitySet="SubCategory" />
           </AssociationSet>
-          <AssociationSet Name="FK__Users__AddressID__30F848ED" Association="Self.FK__Users__AddressID__30F848ED">
+          <AssociationSet Name="FK__Users__AddressID__36B12243" Association="Self.FK__Users__AddressID__36B12243">
             <End Role="CreditCard" EntitySet="CreditCard" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="FK__Users__CompanyID__31EC6D26" Association="Self.FK__Users__CompanyID__31EC6D26">
+          <AssociationSet Name="FK__Users__CompanyID__37A5467C" Association="Self.FK__Users__CompanyID__37A5467C">
             <End Role="Company" EntitySet="Company" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="FK__Users__ContactID__2F10007B" Association="Self.FK__Users__ContactID__2F10007B">
+          <AssociationSet Name="FK__Users__ContactID__34C8D9D1" Association="Self.FK__Users__ContactID__34C8D9D1">
             <End Role="Contact" EntitySet="Contact" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="FK__Users__CreditCar__300424B4" Association="Self.FK__Users__CreditCar__300424B4">
+          <AssociationSet Name="FK__Users__CreditCar__35BCFE0A" Association="Self.FK__Users__CreditCar__35BCFE0A">
             <End Role="Address" EntitySet="Address" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="FK__Users__UserRoleI__33D4B598" Association="Self.FK__Users__UserRoleI__33D4B598">
+          <AssociationSet Name="FK__Users__UserRoleI__398D8EEE" Association="Self.FK__Users__UserRoleI__398D8EEE">
             <End Role="UserRole" EntitySet="UserRole" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
-          <AssociationSet Name="FK__Users__UserTypeI__32E0915F" Association="Self.FK__Users__UserTypeI__32E0915F">
+          <AssociationSet Name="FK__Users__UserTypeI__38996AB5" Association="Self.FK__Users__UserTypeI__38996AB5">
             <End Role="UserType" EntitySet="UserType" />
             <End Role="Users" EntitySet="Users" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="OnlineShoppingCart.DAL" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Address" EntityType="OnlineShoppingCart.DAL.Address" />
+          <EntitySet Name="CardType" EntityType="OnlineShoppingCart.DAL.CardType" />
+          <EntitySet Name="Category" EntityType="OnlineShoppingCart.DAL.Category" />
+          <EntitySet Name="Company" EntityType="OnlineShoppingCart.DAL.Company" />
+          <EntitySet Name="Contact" EntityType="OnlineShoppingCart.DAL.Contact" />
+          <EntitySet Name="CreditCard" EntityType="OnlineShoppingCart.DAL.CreditCard" />
+          <EntitySet Name="Order" EntityType="OnlineShoppingCart.DAL.Order" />
+          <EntitySet Name="OrderItem" EntityType="OnlineShoppingCart.DAL.OrderItem" />
+          <EntitySet Name="Product" EntityType="OnlineShoppingCart.DAL.Product" />
+          <EntitySet Name="Setting" EntityType="OnlineShoppingCart.DAL.Setting" />
+          <EntitySet Name="SubCategory" EntityType="OnlineShoppingCart.DAL.SubCategory" />
+          <EntitySet Name="UserRole" EntityType="OnlineShoppingCart.DAL.UserRole" />
+          <EntitySet Name="Users" EntityType="OnlineShoppingCart.DAL.Users" />
+          <EntitySet Name="UserType" EntityType="OnlineShoppingCart.DAL.UserType" />
+          <AssociationSet Name="FK__Company__Address__2F10007B" Association="OnlineShoppingCart.DAL.FK__Company__Address__2F10007B">
+            <End Role="Address" EntitySet="Address" />
+            <End Role="Company" EntitySet="Company" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Users__CreditCar__35BCFE0A" Association="OnlineShoppingCart.DAL.FK__Users__CreditCar__35BCFE0A">
+            <End Role="Address" EntitySet="Address" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CreditCar__CardT__1A14E395" Association="OnlineShoppingCart.DAL.FK__CreditCar__CardT__1A14E395">
+            <End Role="CardType" EntitySet="CardType" />
+            <End Role="CreditCard" EntitySet="CreditCard" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__Categor__403A8C7D" Association="OnlineShoppingCart.DAL.FK__Product__Categor__403A8C7D">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SubCatego__Categ__0AD2A005" Association="OnlineShoppingCart.DAL.FK__SubCatego__Categ__0AD2A005">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="SubCategory" EntitySet="SubCategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Company__Contact__2E1BDC42" Association="OnlineShoppingCart.DAL.FK__Company__Contact__2E1BDC42">
+            <End Role="Contact" EntitySet="Contact" />
+            <End Role="Company" EntitySet="Company" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__Company__3F466844" Association="OnlineShoppingCart.DAL.FK__Product__Company__3F466844">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Users__CompanyID__37A5467C" Association="OnlineShoppingCart.DAL.FK__Users__CompanyID__37A5467C">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Users__ContactID__34C8D9D1" Association="OnlineShoppingCart.DAL.FK__Users__ContactID__34C8D9D1">
+            <End Role="Contact" EntitySet="Contact" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Users__AddressID__36B12243" Association="OnlineShoppingCart.DAL.FK__Users__AddressID__36B12243">
+            <End Role="CreditCard" EntitySet="CreditCard" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Order__UserID__4E88ABD4" Association="OnlineShoppingCart.DAL.FK__Order__UserID__4E88ABD4">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderItem__Order__5441852A" Association="OnlineShoppingCart.DAL.FK__OrderItem__Order__5441852A">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="OrderItem" EntitySet="OrderItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK__OrderItem__Produ__5535A963" Association="OnlineShoppingCart.DAL.FK__OrderItem__Produ__5535A963">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="OrderItem" EntitySet="OrderItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__SubCate__412EB0B6" Association="OnlineShoppingCart.DAL.FK__Product__SubCate__412EB0B6">
+            <End Role="SubCategory" EntitySet="SubCategory" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Product__UserID__4222D4EF" Association="OnlineShoppingCart.DAL.FK__Product__UserID__4222D4EF">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Users__UserRoleI__398D8EEE" Association="OnlineShoppingCart.DAL.FK__Users__UserRoleI__398D8EEE">
+            <End Role="UserRole" EntitySet="UserRole" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Users__UserTypeI__38996AB5" Association="OnlineShoppingCart.DAL.FK__Users__UserTypeI__38996AB5">
+            <End Role="UserType" EntitySet="UserType" />
+            <End Role="Users" EntitySet="Users" />
+          </AssociationSet>
+          <EntitySet Name="Sale" EntityType="OnlineShoppingCart.DAL.Sale" />
+          <AssociationSet Name="FK__Sale__ProductID__47DBAE45" Association="OnlineShoppingCart.DAL.FK__Sale__ProductID__47DBAE45">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Sale" EntitySet="Sale" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Sale__UserID__48CFD27E" Association="OnlineShoppingCart.DAL.FK__Sale__UserID__48CFD27E">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Sale" EntitySet="Sale" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="Address">
           <Key>
             <PropertyRef Name="AddressID" />
@@ -486,22 +638,19 @@
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateModified" Type="DateTime" Precision="3" />
           <Property Name="DateDeleted" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Company" Relationship="Self.FK__Company__Address__29572725" FromRole="Address" ToRole="Company" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__Users__CreditCar__300424B4" FromRole="Address" ToRole="Users" />
+          <NavigationProperty Name="Company" Relationship="OnlineShoppingCart.DAL.FK__Company__Address__2F10007B" FromRole="Address" ToRole="Company" />
+          <NavigationProperty Name="Users" Relationship="OnlineShoppingCart.DAL.FK__Users__CreditCar__35BCFE0A" FromRole="Address" ToRole="Users" />
         </EntityType>
-        <EntityType Name="Cart">
+        <EntityType Name="CardType">
           <Key>
-            <PropertyRef Name="CartID" />
+            <PropertyRef Name="CardTypeID" />
           </Key>
-          <Property Name="CartID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProductID" Type="Int32" Nullable="false" />
-          <Property Name="UnitCount" Type="Int32" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="CardTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateModified" Type="DateTime" Precision="3" />
           <Property Name="DateDeleted" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Product" Relationship="Self.FK__Cart__ProductID__48CFD27E" FromRole="Cart" ToRole="Product" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__Cart__UserID__49C3F6B7" FromRole="Cart" ToRole="Users" />
+          <NavigationProperty Name="CreditCard" Relationship="OnlineShoppingCart.DAL.FK__CreditCar__CardT__1A14E395" FromRole="CardType" ToRole="CreditCard" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -513,59 +662,90 @@
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateModified" Type="DateTime" Precision="3" />
           <Property Name="DateDeleted" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Product" Relationship="Self.FK__Product__Categor__3A81B327" FromRole="Category" ToRole="Product" />
-          <NavigationProperty Name="SubCategory" Relationship="Self.FK__SubCatego__Categ__0AD2A005" FromRole="Category" ToRole="SubCategory" />
+          <NavigationProperty Name="Product" Relationship="OnlineShoppingCart.DAL.FK__Product__Categor__403A8C7D" FromRole="Category" ToRole="Product" />
+          <NavigationProperty Name="SubCategory" Relationship="OnlineShoppingCart.DAL.FK__SubCatego__Categ__0AD2A005" FromRole="Category" ToRole="SubCategory" />
         </EntityType>
         <EntityType Name="Company">
           <Key>
             <PropertyRef Name="CompanyID" />
           </Key>
           <Property Name="CompanyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CompanyName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CompanyName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ContactID" Type="Int32" Nullable="false" />
           <Property Name="AddressID" Type="Int32" Nullable="false" />
+          <Property Name="Logo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RateStar" Type="Int32" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateModified" Type="DateTime" Precision="3" />
           <Property Name="DateDeleted" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Address" Relationship="Self.FK__Company__Address__29572725" FromRole="Company" ToRole="Address" />
-          <NavigationProperty Name="Contact" Relationship="Self.FK__Company__Contact__286302EC" FromRole="Company" ToRole="Contact" />
-          <NavigationProperty Name="Product" Relationship="Self.FK__Product__Company__398D8EEE" FromRole="Company" ToRole="Product" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__Users__CompanyID__31EC6D26" FromRole="Company" ToRole="Users" />
+          <NavigationProperty Name="Address" Relationship="OnlineShoppingCart.DAL.FK__Company__Address__2F10007B" FromRole="Company" ToRole="Address" />
+          <NavigationProperty Name="Contact" Relationship="OnlineShoppingCart.DAL.FK__Company__Contact__2E1BDC42" FromRole="Company" ToRole="Contact" />
+          <NavigationProperty Name="Product" Relationship="OnlineShoppingCart.DAL.FK__Product__Company__3F466844" FromRole="Company" ToRole="Product" />
+          <NavigationProperty Name="Users" Relationship="OnlineShoppingCart.DAL.FK__Users__CompanyID__37A5467C" FromRole="Company" ToRole="Users" />
         </EntityType>
         <EntityType Name="Contact">
           <Key>
             <PropertyRef Name="ContactID" />
           </Key>
           <Property Name="ContactID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Website" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateModified" Type="DateTime" Precision="3" />
           <Property Name="DateDeleted" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Company" Relationship="Self.FK__Company__Contact__286302EC" FromRole="Contact" ToRole="Company" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__Users__ContactID__2F10007B" FromRole="Contact" ToRole="Users" />
+          <NavigationProperty Name="Company" Relationship="OnlineShoppingCart.DAL.FK__Company__Contact__2E1BDC42" FromRole="Contact" ToRole="Company" />
+          <NavigationProperty Name="Users" Relationship="OnlineShoppingCart.DAL.FK__Users__ContactID__34C8D9D1" FromRole="Contact" ToRole="Users" />
         </EntityType>
         <EntityType Name="CreditCard">
           <Key>
             <PropertyRef Name="CreditCardID" />
           </Key>
           <Property Name="CreditCardID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CardNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CardNumber" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="ExpirationDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="CSC" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CSC" Type="String" Nullable="false" MaxLength="3" FixedLength="false" Unicode="false" />
+          <Property Name="CardTypeID" Type="Int32" Nullable="false" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateModified" Type="DateTime" Precision="3" />
           <Property Name="DateDeleted" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__Users__AddressID__30F848ED" FromRole="CreditCard" ToRole="Users" />
+          <NavigationProperty Name="CardType" Relationship="OnlineShoppingCart.DAL.FK__CreditCar__CardT__1A14E395" FromRole="CreditCard" ToRole="CardType" />
+          <NavigationProperty Name="Users" Relationship="OnlineShoppingCart.DAL.FK__Users__AddressID__36B12243" FromRole="CreditCard" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="TotalPrice" Type="Int32" />
+          <Property Name="IsCheckout" Type="Boolean" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+          <Property Name="DateDeleted" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Users" Relationship="OnlineShoppingCart.DAL.FK__Order__UserID__4E88ABD4" FromRole="Order" ToRole="Users" />
+          <NavigationProperty Name="OrderItem" Relationship="OnlineShoppingCart.DAL.FK__OrderItem__Order__5441852A" FromRole="Order" ToRole="OrderItem" />
+        </EntityType>
+        <EntityType Name="OrderItem">
+          <Key>
+            <PropertyRef Name="OrderItemID" />
+          </Key>
+          <Property Name="OrderItemID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderID" Type="Int32" Nullable="false" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+          <Property Name="DateDeleted" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Order" Relationship="OnlineShoppingCart.DAL.FK__OrderItem__Order__5441852A" FromRole="OrderItem" ToRole="Order" />
+          <NavigationProperty Name="Product" Relationship="OnlineShoppingCart.DAL.FK__OrderItem__Produ__5535A963" FromRole="OrderItem" ToRole="Product" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="ProductID" />
           </Key>
           <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="CompanyID" Type="Int32" Nullable="false" />
           <Property Name="CategoryID" Type="Int32" Nullable="false" />
@@ -575,31 +755,17 @@
           <Property Name="QunatityInStock" Type="Int32" />
           <Property Name="UnitPrice" Type="Int32" />
           <Property Name="Image" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Size" Type="Double" />
           <Property Name="IsPosted" Type="Boolean" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateModified" Type="DateTime" Precision="3" />
           <Property Name="DateDeleted" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Cart" Relationship="Self.FK__Cart__ProductID__48CFD27E" FromRole="Product" ToRole="Cart" />
-          <NavigationProperty Name="Category" Relationship="Self.FK__Product__Categor__3A81B327" FromRole="Product" ToRole="Category" />
-          <NavigationProperty Name="Company" Relationship="Self.FK__Product__Company__398D8EEE" FromRole="Product" ToRole="Company" />
-          <NavigationProperty Name="SubCategory" Relationship="Self.FK__Product__SubCate__3B75D760" FromRole="Product" ToRole="SubCategory" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__Product__UserID__3C69FB99" FromRole="Product" ToRole="Users" />
-          <NavigationProperty Name="Sale" Relationship="Self.FK__Sale__ProductID__4222D4EF" FromRole="Product" ToRole="Sale" />
-        </EntityType>
-        <EntityType Name="Sale">
-          <Key>
-            <PropertyRef Name="SalesID" />
-          </Key>
-          <Property Name="SalesID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProductID" Type="Int32" Nullable="false" />
-          <Property Name="UserID" Type="Int32" Nullable="false" />
-          <Property Name="UnitSold" Type="Int32" />
-          <Property Name="Amount" Type="Int32" />
-          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="DateModified" Type="DateTime" Precision="3" />
-          <Property Name="DateDeleted" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Product" Relationship="Self.FK__Sale__ProductID__4222D4EF" FromRole="Sale" ToRole="Product" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__Sale__UserID__4316F928" FromRole="Sale" ToRole="Users" />
+          <NavigationProperty Name="Category" Relationship="OnlineShoppingCart.DAL.FK__Product__Categor__403A8C7D" FromRole="Product" ToRole="Category" />
+          <NavigationProperty Name="Company" Relationship="OnlineShoppingCart.DAL.FK__Product__Company__3F466844" FromRole="Product" ToRole="Company" />
+          <NavigationProperty Name="OrderItem" Relationship="OnlineShoppingCart.DAL.FK__OrderItem__Produ__5535A963" FromRole="Product" ToRole="OrderItem" />
+          <NavigationProperty Name="SubCategory" Relationship="OnlineShoppingCart.DAL.FK__Product__SubCate__412EB0B6" FromRole="Product" ToRole="SubCategory" />
+          <NavigationProperty Name="Users" Relationship="OnlineShoppingCart.DAL.FK__Product__UserID__4222D4EF" FromRole="Product" ToRole="Users" />
+          <NavigationProperty Name="Sale" Relationship="OnlineShoppingCart.DAL.FK__Sale__ProductID__47DBAE45" FromRole="Product" ToRole="Sale" />
         </EntityType>
         <EntityType Name="Setting">
           <Key>
@@ -623,29 +789,30 @@
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateModified" Type="DateTime" Precision="3" />
           <Property Name="DateDeleted" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Category" Relationship="Self.FK__SubCatego__Categ__0AD2A005" FromRole="SubCategory" ToRole="Category" />
-          <NavigationProperty Name="Product" Relationship="Self.FK__Product__SubCate__3B75D760" FromRole="SubCategory" ToRole="Product" />
+          <NavigationProperty Name="Category" Relationship="OnlineShoppingCart.DAL.FK__SubCatego__Categ__0AD2A005" FromRole="SubCategory" ToRole="Category" />
+          <NavigationProperty Name="Product" Relationship="OnlineShoppingCart.DAL.FK__Product__SubCate__412EB0B6" FromRole="SubCategory" ToRole="Product" />
         </EntityType>
         <EntityType Name="UserRole">
           <Key>
             <PropertyRef Name="UserRoleID" />
           </Key>
           <Property Name="UserRoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateModified" Type="DateTime" Precision="3" />
           <Property Name="DateDeleted" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__Users__UserRoleI__33D4B598" FromRole="UserRole" ToRole="Users" />
+          <NavigationProperty Name="Users" Relationship="OnlineShoppingCart.DAL.FK__Users__UserRoleI__398D8EEE" FromRole="UserRole" ToRole="Users" />
         </EntityType>
         <EntityType Name="Users">
           <Key>
             <PropertyRef Name="UserID" />
           </Key>
           <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="ContactID" Type="Int32" />
           <Property Name="CreditCardID" Type="Int32" />
           <Property Name="AddressID" Type="Int32" />
@@ -656,32 +823,32 @@
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateModified" Type="DateTime" Precision="3" />
           <Property Name="DateDeleted" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Address" Relationship="Self.FK__Users__CreditCar__300424B4" FromRole="Users" ToRole="Address" />
-          <NavigationProperty Name="Cart" Relationship="Self.FK__Cart__UserID__49C3F6B7" FromRole="Users" ToRole="Cart" />
-          <NavigationProperty Name="Company" Relationship="Self.FK__Users__CompanyID__31EC6D26" FromRole="Users" ToRole="Company" />
-          <NavigationProperty Name="Contact" Relationship="Self.FK__Users__ContactID__2F10007B" FromRole="Users" ToRole="Contact" />
-          <NavigationProperty Name="CreditCard" Relationship="Self.FK__Users__AddressID__30F848ED" FromRole="Users" ToRole="CreditCard" />
-          <NavigationProperty Name="Product" Relationship="Self.FK__Product__UserID__3C69FB99" FromRole="Users" ToRole="Product" />
-          <NavigationProperty Name="Sale" Relationship="Self.FK__Sale__UserID__4316F928" FromRole="Users" ToRole="Sale" />
-          <NavigationProperty Name="UserRole" Relationship="Self.FK__Users__UserRoleI__33D4B598" FromRole="Users" ToRole="UserRole" />
-          <NavigationProperty Name="UserType" Relationship="Self.FK__Users__UserTypeI__32E0915F" FromRole="Users" ToRole="UserType" />
+          <NavigationProperty Name="Address" Relationship="OnlineShoppingCart.DAL.FK__Users__CreditCar__35BCFE0A" FromRole="Users" ToRole="Address" />
+          <NavigationProperty Name="Company" Relationship="OnlineShoppingCart.DAL.FK__Users__CompanyID__37A5467C" FromRole="Users" ToRole="Company" />
+          <NavigationProperty Name="Contact" Relationship="OnlineShoppingCart.DAL.FK__Users__ContactID__34C8D9D1" FromRole="Users" ToRole="Contact" />
+          <NavigationProperty Name="CreditCard" Relationship="OnlineShoppingCart.DAL.FK__Users__AddressID__36B12243" FromRole="Users" ToRole="CreditCard" />
+          <NavigationProperty Name="Order" Relationship="OnlineShoppingCart.DAL.FK__Order__UserID__4E88ABD4" FromRole="Users" ToRole="Order" />
+          <NavigationProperty Name="Product" Relationship="OnlineShoppingCart.DAL.FK__Product__UserID__4222D4EF" FromRole="Users" ToRole="Product" />
+          <NavigationProperty Name="UserRole" Relationship="OnlineShoppingCart.DAL.FK__Users__UserRoleI__398D8EEE" FromRole="Users" ToRole="UserRole" />
+          <NavigationProperty Name="UserType" Relationship="OnlineShoppingCart.DAL.FK__Users__UserTypeI__38996AB5" FromRole="Users" ToRole="UserType" />
+          <NavigationProperty Name="Sale" Relationship="OnlineShoppingCart.DAL.FK__Sale__UserID__48CFD27E" FromRole="Users" ToRole="Sale" />
         </EntityType>
         <EntityType Name="UserType">
           <Key>
             <PropertyRef Name="UserTypeID" />
           </Key>
           <Property Name="UserTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="TypeName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TypeName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="Link" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="DateModified" Type="DateTime" Precision="3" />
           <Property Name="DateDeleted" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Users" Relationship="Self.FK__Users__UserTypeI__32E0915F" FromRole="UserType" ToRole="Users" />
+          <NavigationProperty Name="Users" Relationship="OnlineShoppingCart.DAL.FK__Users__UserTypeI__38996AB5" FromRole="UserType" ToRole="Users" />
         </EntityType>
-        <Association Name="FK__Company__Address__29572725">
-          <End Role="Address" Type="Self.Address" Multiplicity="1" />
-          <End Role="Company" Type="Self.Company" Multiplicity="*" />
+        <Association Name="FK__Company__Address__2F10007B">
+          <End Type="OnlineShoppingCart.DAL.Address" Role="Address" Multiplicity="1" />
+          <End Type="OnlineShoppingCart.DAL.Company" Role="Company" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Address">
               <PropertyRef Name="AddressID" />
@@ -691,9 +858,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Users__CreditCar__300424B4">
-          <End Role="Address" Type="Self.Address" Multiplicity="0..1" />
-          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+        <Association Name="FK__Users__CreditCar__35BCFE0A">
+          <End Type="OnlineShoppingCart.DAL.Address" Role="Address" Multiplicity="0..1" />
+          <End Type="OnlineShoppingCart.DAL.Users" Role="Users" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Address">
               <PropertyRef Name="AddressID" />
@@ -703,33 +870,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Cart__ProductID__48CFD27E">
-          <End Role="Product" Type="Self.Product" Multiplicity="1" />
-          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+        <Association Name="FK__CreditCar__CardT__1A14E395">
+          <End Type="OnlineShoppingCart.DAL.CardType" Role="CardType" Multiplicity="1" />
+          <End Type="OnlineShoppingCart.DAL.CreditCard" Role="CreditCard" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="ProductID" />
+            <Principal Role="CardType">
+              <PropertyRef Name="CardTypeID" />
             </Principal>
-            <Dependent Role="Cart">
-              <PropertyRef Name="ProductID" />
+            <Dependent Role="CreditCard">
+              <PropertyRef Name="CardTypeID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Cart__UserID__49C3F6B7">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="Cart">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Product__Categor__3A81B327">
-          <End Role="Category" Type="Self.Category" Multiplicity="1" />
-          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+        <Association Name="FK__Product__Categor__403A8C7D">
+          <End Type="OnlineShoppingCart.DAL.Category" Role="Category" Multiplicity="1" />
+          <End Type="OnlineShoppingCart.DAL.Product" Role="Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Category">
               <PropertyRef Name="CategoryID" />
@@ -740,8 +895,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK__SubCatego__Categ__0AD2A005">
-          <End Role="Category" Type="Self.Category" Multiplicity="1" />
-          <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="*" />
+          <End Type="OnlineShoppingCart.DAL.Category" Role="Category" Multiplicity="1" />
+          <End Type="OnlineShoppingCart.DAL.SubCategory" Role="SubCategory" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Category">
               <PropertyRef Name="CategoryID" />
@@ -751,9 +906,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Company__Contact__286302EC">
-          <End Role="Contact" Type="Self.Contact" Multiplicity="1" />
-          <End Role="Company" Type="Self.Company" Multiplicity="*" />
+        <Association Name="FK__Company__Contact__2E1BDC42">
+          <End Type="OnlineShoppingCart.DAL.Contact" Role="Contact" Multiplicity="1" />
+          <End Type="OnlineShoppingCart.DAL.Company" Role="Company" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Contact">
               <PropertyRef Name="ContactID" />
@@ -763,9 +918,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Product__Company__398D8EEE">
-          <End Role="Company" Type="Self.Company" Multiplicity="1" />
-          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+        <Association Name="FK__Product__Company__3F466844">
+          <End Type="OnlineShoppingCart.DAL.Company" Role="Company" Multiplicity="1" />
+          <End Type="OnlineShoppingCart.DAL.Product" Role="Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Company">
               <PropertyRef Name="CompanyID" />
@@ -775,9 +930,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Users__CompanyID__31EC6D26">
-          <End Role="Company" Type="Self.Company" Multiplicity="0..1" />
-          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+        <Association Name="FK__Users__CompanyID__37A5467C">
+          <End Type="OnlineShoppingCart.DAL.Company" Role="Company" Multiplicity="0..1" />
+          <End Type="OnlineShoppingCart.DAL.Users" Role="Users" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Company">
               <PropertyRef Name="CompanyID" />
@@ -787,9 +942,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Users__ContactID__2F10007B">
-          <End Role="Contact" Type="Self.Contact" Multiplicity="0..1" />
-          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+        <Association Name="FK__Users__ContactID__34C8D9D1">
+          <End Type="OnlineShoppingCart.DAL.Contact" Role="Contact" Multiplicity="0..1" />
+          <End Type="OnlineShoppingCart.DAL.Users" Role="Users" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Contact">
               <PropertyRef Name="ContactID" />
@@ -799,9 +954,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Users__AddressID__30F848ED">
-          <End Role="CreditCard" Type="Self.CreditCard" Multiplicity="0..1" />
-          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+        <Association Name="FK__Users__AddressID__36B12243">
+          <End Type="OnlineShoppingCart.DAL.CreditCard" Role="CreditCard" Multiplicity="0..1" />
+          <End Type="OnlineShoppingCart.DAL.Users" Role="Users" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="CreditCard">
               <PropertyRef Name="CreditCardID" />
@@ -811,9 +966,45 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Product__SubCate__3B75D760">
-          <End Role="SubCategory" Type="Self.SubCategory" Multiplicity="0..1" />
-          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+        <Association Name="FK__Order__UserID__4E88ABD4">
+          <End Type="OnlineShoppingCart.DAL.Users" Role="Users" Multiplicity="1" />
+          <End Type="OnlineShoppingCart.DAL.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderItem__Order__5441852A">
+          <End Type="OnlineShoppingCart.DAL.Order" Role="Order" Multiplicity="1" />
+          <End Type="OnlineShoppingCart.DAL.OrderItem" Role="OrderItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderID" />
+            </Principal>
+            <Dependent Role="OrderItem">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__OrderItem__Produ__5535A963">
+          <End Type="OnlineShoppingCart.DAL.Product" Role="Product" Multiplicity="1" />
+          <End Type="OnlineShoppingCart.DAL.OrderItem" Role="OrderItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="OrderItem">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Product__SubCate__412EB0B6">
+          <End Type="OnlineShoppingCart.DAL.SubCategory" Role="SubCategory" Multiplicity="0..1" />
+          <End Type="OnlineShoppingCart.DAL.Product" Role="Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="SubCategory">
               <PropertyRef Name="SubCategoryID" />
@@ -823,9 +1014,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Product__UserID__3C69FB99">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+        <Association Name="FK__Product__UserID__4222D4EF">
+          <End Type="OnlineShoppingCart.DAL.Users" Role="Users" Multiplicity="1" />
+          <End Type="OnlineShoppingCart.DAL.Product" Role="Product" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Users">
               <PropertyRef Name="UserID" />
@@ -835,33 +1026,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Sale__ProductID__4222D4EF">
-          <End Role="Product" Type="Self.Product" Multiplicity="1" />
-          <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="ProductID" />
-            </Principal>
-            <Dependent Role="Sale">
-              <PropertyRef Name="ProductID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Sale__UserID__4316F928">
-          <End Role="Users" Type="Self.Users" Multiplicity="1" />
-          <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Users">
-              <PropertyRef Name="UserID" />
-            </Principal>
-            <Dependent Role="Sale">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__Users__UserRoleI__33D4B598">
-          <End Role="UserRole" Type="Self.UserRole" Multiplicity="0..1" />
-          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+        <Association Name="FK__Users__UserRoleI__398D8EEE">
+          <End Type="OnlineShoppingCart.DAL.UserRole" Role="UserRole" Multiplicity="0..1" />
+          <End Type="OnlineShoppingCart.DAL.Users" Role="Users" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UserRole">
               <PropertyRef Name="UserRoleID" />
@@ -871,9 +1038,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Users__UserTypeI__32E0915F">
-          <End Role="UserType" Type="Self.UserType" Multiplicity="0..1" />
-          <End Role="Users" Type="Self.Users" Multiplicity="*" />
+        <Association Name="FK__Users__UserTypeI__38996AB5">
+          <End Type="OnlineShoppingCart.DAL.UserType" Role="UserType" Multiplicity="0..1" />
+          <End Type="OnlineShoppingCart.DAL.Users" Role="Users" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="UserType">
               <PropertyRef Name="UserTypeID" />
@@ -883,89 +1050,45 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Address" EntityType="Self.Address" />
-          <EntitySet Name="Cart" EntityType="Self.Cart" />
-          <EntitySet Name="Category" EntityType="Self.Category" />
-          <EntitySet Name="Company" EntityType="Self.Company" />
-          <EntitySet Name="Contact" EntityType="Self.Contact" />
-          <EntitySet Name="CreditCard" EntityType="Self.CreditCard" />
-          <EntitySet Name="Product" EntityType="Self.Product" />
-          <EntitySet Name="Sale" EntityType="Self.Sale" />
-          <EntitySet Name="Setting" EntityType="Self.Setting" />
-          <EntitySet Name="SubCategory" EntityType="Self.SubCategory" />
-          <EntitySet Name="UserRole" EntityType="Self.UserRole" />
-          <EntitySet Name="Users" EntityType="Self.Users" />
-          <EntitySet Name="UserType" EntityType="Self.UserType" />
-          <AssociationSet Name="FK__Company__Address__29572725" Association="Self.FK__Company__Address__29572725">
-            <End Role="Address" EntitySet="Address" />
-            <End Role="Company" EntitySet="Company" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Users__CreditCar__300424B4" Association="Self.FK__Users__CreditCar__300424B4">
-            <End Role="Address" EntitySet="Address" />
-            <End Role="Users" EntitySet="Users" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Cart__ProductID__48CFD27E" Association="Self.FK__Cart__ProductID__48CFD27E">
-            <End Role="Product" EntitySet="Product" />
-            <End Role="Cart" EntitySet="Cart" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Cart__UserID__49C3F6B7" Association="Self.FK__Cart__UserID__49C3F6B7">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Cart" EntitySet="Cart" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Product__Categor__3A81B327" Association="Self.FK__Product__Categor__3A81B327">
-            <End Role="Category" EntitySet="Category" />
-            <End Role="Product" EntitySet="Product" />
-          </AssociationSet>
-          <AssociationSet Name="FK__SubCatego__Categ__0AD2A005" Association="Self.FK__SubCatego__Categ__0AD2A005">
-            <End Role="Category" EntitySet="Category" />
-            <End Role="SubCategory" EntitySet="SubCategory" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Company__Contact__286302EC" Association="Self.FK__Company__Contact__286302EC">
-            <End Role="Contact" EntitySet="Contact" />
-            <End Role="Company" EntitySet="Company" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Product__Company__398D8EEE" Association="Self.FK__Product__Company__398D8EEE">
-            <End Role="Company" EntitySet="Company" />
-            <End Role="Product" EntitySet="Product" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Users__CompanyID__31EC6D26" Association="Self.FK__Users__CompanyID__31EC6D26">
-            <End Role="Company" EntitySet="Company" />
-            <End Role="Users" EntitySet="Users" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Users__ContactID__2F10007B" Association="Self.FK__Users__ContactID__2F10007B">
-            <End Role="Contact" EntitySet="Contact" />
-            <End Role="Users" EntitySet="Users" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Users__AddressID__30F848ED" Association="Self.FK__Users__AddressID__30F848ED">
-            <End Role="CreditCard" EntitySet="CreditCard" />
-            <End Role="Users" EntitySet="Users" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Product__SubCate__3B75D760" Association="Self.FK__Product__SubCate__3B75D760">
-            <End Role="SubCategory" EntitySet="SubCategory" />
-            <End Role="Product" EntitySet="Product" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Product__UserID__3C69FB99" Association="Self.FK__Product__UserID__3C69FB99">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Product" EntitySet="Product" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Sale__ProductID__4222D4EF" Association="Self.FK__Sale__ProductID__4222D4EF">
-            <End Role="Product" EntitySet="Product" />
-            <End Role="Sale" EntitySet="Sale" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Sale__UserID__4316F928" Association="Self.FK__Sale__UserID__4316F928">
-            <End Role="Users" EntitySet="Users" />
-            <End Role="Sale" EntitySet="Sale" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Users__UserRoleI__33D4B598" Association="Self.FK__Users__UserRoleI__33D4B598">
-            <End Role="UserRole" EntitySet="UserRole" />
-            <End Role="Users" EntitySet="Users" />
-          </AssociationSet>
-          <AssociationSet Name="FK__Users__UserTypeI__32E0915F" Association="Self.FK__Users__UserTypeI__32E0915F">
-            <End Role="UserType" EntitySet="UserType" />
-            <End Role="Users" EntitySet="Users" />
-          </AssociationSet>
-        </EntityContainer>
+        <EntityType Name="Sale">
+          <Key>
+            <PropertyRef Name="SaleID" />
+          </Key>
+          <Property Name="SaleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="TotalPrice" Type="Int32" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateModified" Type="DateTime" Precision="3" />
+          <Property Name="DateDeleted" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Product" Relationship="OnlineShoppingCart.DAL.FK__Sale__ProductID__47DBAE45" FromRole="Sale" ToRole="Product" />
+          <NavigationProperty Name="Users" Relationship="OnlineShoppingCart.DAL.FK__Sale__UserID__48CFD27E" FromRole="Sale" ToRole="Users" />
+        </EntityType>
+        <Association Name="FK__Sale__ProductID__47DBAE45">
+          <End Type="OnlineShoppingCart.DAL.Product" Role="Product" Multiplicity="1" />
+          <End Type="OnlineShoppingCart.DAL.Sale" Role="Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Sale__UserID__48CFD27E">
+          <End Type="OnlineShoppingCart.DAL.Users" Role="Users" Multiplicity="1" />
+          <End Type="OnlineShoppingCart.DAL.Sale" Role="Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -975,187 +1098,215 @@
           <EntitySetMapping Name="Address">
             <EntityTypeMapping TypeName="OnlineShoppingCart.DAL.Address">
               <MappingFragment StoreEntitySet="Address">
-                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
-                <ScalarProperty Name="AddressType" ColumnName="AddressType" />
-                <ScalarProperty Name="Street1" ColumnName="Street1" />
-                <ScalarProperty Name="Street2" ColumnName="Street2" />
-                <ScalarProperty Name="City" ColumnName="City" />
-                <ScalarProperty Name="State" ColumnName="State" />
-                <ScalarProperty Name="Zip" ColumnName="Zip" />
-                <ScalarProperty Name="Country" ColumnName="Country" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
                 <ScalarProperty Name="DateDeleted" ColumnName="DateDeleted" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Zip" ColumnName="Zip" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Street2" ColumnName="Street2" />
+                <ScalarProperty Name="Street1" ColumnName="Street1" />
+                <ScalarProperty Name="AddressType" ColumnName="AddressType" />
+                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Cart">
-            <EntityTypeMapping TypeName="OnlineShoppingCart.DAL.Cart">
-              <MappingFragment StoreEntitySet="Cart">
-                <ScalarProperty Name="CartID" ColumnName="CartID" />
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="UnitCount" ColumnName="UnitCount" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+          <EntitySetMapping Name="CardType">
+            <EntityTypeMapping TypeName="OnlineShoppingCart.DAL.CardType">
+              <MappingFragment StoreEntitySet="CardType">
                 <ScalarProperty Name="DateDeleted" ColumnName="DateDeleted" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="CardTypeID" ColumnName="CardTypeID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Category">
             <EntityTypeMapping TypeName="OnlineShoppingCart.DAL.Category">
               <MappingFragment StoreEntitySet="Category">
-                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
                 <ScalarProperty Name="DateDeleted" ColumnName="DateDeleted" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Company">
             <EntityTypeMapping TypeName="OnlineShoppingCart.DAL.Company">
               <MappingFragment StoreEntitySet="Company">
-                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
-                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
-                <ScalarProperty Name="ContactID" ColumnName="ContactID" />
-                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
                 <ScalarProperty Name="DateDeleted" ColumnName="DateDeleted" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="RateStar" ColumnName="RateStar" />
+                <ScalarProperty Name="Logo" ColumnName="Logo" />
+                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+                <ScalarProperty Name="ContactID" ColumnName="ContactID" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Contact">
             <EntityTypeMapping TypeName="OnlineShoppingCart.DAL.Contact">
               <MappingFragment StoreEntitySet="Contact">
-                <ScalarProperty Name="ContactID" ColumnName="ContactID" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Phone" ColumnName="Phone" />
-                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
-                <ScalarProperty Name="Website" ColumnName="Website" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
                 <ScalarProperty Name="DateDeleted" ColumnName="DateDeleted" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Website" ColumnName="Website" />
+                <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="ContactID" ColumnName="ContactID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="CreditCard">
             <EntityTypeMapping TypeName="OnlineShoppingCart.DAL.CreditCard">
               <MappingFragment StoreEntitySet="CreditCard">
-                <ScalarProperty Name="CreditCardID" ColumnName="CreditCardID" />
-                <ScalarProperty Name="CardNumber" ColumnName="CardNumber" />
-                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
-                <ScalarProperty Name="CSC" ColumnName="CSC" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
                 <ScalarProperty Name="DateDeleted" ColumnName="DateDeleted" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="CardTypeID" ColumnName="CardTypeID" />
+                <ScalarProperty Name="CSC" ColumnName="CSC" />
+                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+                <ScalarProperty Name="CardNumber" ColumnName="CardNumber" />
+                <ScalarProperty Name="CreditCardID" ColumnName="CreditCardID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Order">
+            <EntityTypeMapping TypeName="OnlineShoppingCart.DAL.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="DateDeleted" ColumnName="DateDeleted" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="IsCheckout" ColumnName="IsCheckout" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderItem">
+            <EntityTypeMapping TypeName="OnlineShoppingCart.DAL.OrderItem">
+              <MappingFragment StoreEntitySet="OrderItem">
+                <ScalarProperty Name="DateDeleted" ColumnName="DateDeleted" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="OrderItemID" ColumnName="OrderItemID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Product">
             <EntityTypeMapping TypeName="OnlineShoppingCart.DAL.Product">
               <MappingFragment StoreEntitySet="Product">
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
-                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
-                <ScalarProperty Name="SubCategoryID" ColumnName="SubCategoryID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="QunatityInStock" ColumnName="QunatityInStock" />
-                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
-                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="DateDeleted" ColumnName="DateDeleted" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
                 <ScalarProperty Name="IsPosted" ColumnName="IsPosted" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
-                <ScalarProperty Name="DateDeleted" ColumnName="DateDeleted" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Sale">
-            <EntityTypeMapping TypeName="OnlineShoppingCart.DAL.Sale">
-              <MappingFragment StoreEntitySet="Sale">
-                <ScalarProperty Name="SalesID" ColumnName="SalesID" />
-                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="QunatityInStock" ColumnName="QunatityInStock" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="UnitSold" ColumnName="UnitSold" />
-                <ScalarProperty Name="Amount" ColumnName="Amount" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
-                <ScalarProperty Name="DateDeleted" ColumnName="DateDeleted" />
+                <ScalarProperty Name="SubCategoryID" ColumnName="SubCategoryID" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Setting">
             <EntityTypeMapping TypeName="OnlineShoppingCart.DAL.Setting">
               <MappingFragment StoreEntitySet="Setting">
-                <ScalarProperty Name="SettingID" ColumnName="SettingID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Value" ColumnName="Value" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
                 <ScalarProperty Name="DateDeleted" ColumnName="DateDeleted" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Value" ColumnName="Value" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SettingID" ColumnName="SettingID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="SubCategory">
             <EntityTypeMapping TypeName="OnlineShoppingCart.DAL.SubCategory">
               <MappingFragment StoreEntitySet="SubCategory">
-                <ScalarProperty Name="SubCategoryID" ColumnName="SubCategoryID" />
-                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
                 <ScalarProperty Name="DateDeleted" ColumnName="DateDeleted" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="SubCategoryID" ColumnName="SubCategoryID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserRole">
             <EntityTypeMapping TypeName="OnlineShoppingCart.DAL.UserRole">
               <MappingFragment StoreEntitySet="UserRole">
-                <ScalarProperty Name="UserRoleID" ColumnName="UserRoleID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
                 <ScalarProperty Name="DateDeleted" ColumnName="DateDeleted" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="UserRoleID" ColumnName="UserRoleID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="OnlineShoppingCart.DAL.Users">
               <MappingFragment StoreEntitySet="Users">
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
-                <ScalarProperty Name="LastName" ColumnName="LastName" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="ContactID" ColumnName="ContactID" />
-                <ScalarProperty Name="CreditCardID" ColumnName="CreditCardID" />
-                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
-                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
-                <ScalarProperty Name="UserTypeID" ColumnName="UserTypeID" />
-                <ScalarProperty Name="UserRoleID" ColumnName="UserRoleID" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
                 <ScalarProperty Name="DateDeleted" ColumnName="DateDeleted" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="UserRoleID" ColumnName="UserRoleID" />
+                <ScalarProperty Name="UserTypeID" ColumnName="UserTypeID" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+                <ScalarProperty Name="AddressID" ColumnName="AddressID" />
+                <ScalarProperty Name="CreditCardID" ColumnName="CreditCardID" />
+                <ScalarProperty Name="ContactID" ColumnName="ContactID" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="UserType">
             <EntityTypeMapping TypeName="OnlineShoppingCart.DAL.UserType">
               <MappingFragment StoreEntitySet="UserType">
-                <ScalarProperty Name="UserTypeID" ColumnName="UserTypeID" />
-                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Link" ColumnName="Link" />
-                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
-                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
                 <ScalarProperty Name="DateDeleted" ColumnName="DateDeleted" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="TypeName" ColumnName="TypeName" />
+                <ScalarProperty Name="UserTypeID" ColumnName="UserTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sale">
+            <EntityTypeMapping TypeName="OnlineShoppingCart.DAL.Sale">
+              <MappingFragment StoreEntitySet="Sale">
+                <ScalarProperty Name="DateDeleted" ColumnName="DateDeleted" />
+                <ScalarProperty Name="DateModified" ColumnName="DateModified" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="SaleID" ColumnName="SaleID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

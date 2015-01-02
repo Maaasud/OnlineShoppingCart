@@ -97,7 +97,7 @@
     <Compile Include="Address.cs">
       <DependentUpon>OnlineShoppingCart.tt</DependentUpon>
     </Compile>
-    <Compile Include="Cart.cs">
+    <Compile Include="CardType.cs">
       <DependentUpon>OnlineShoppingCart.tt</DependentUpon>
     </Compile>
     <Compile Include="Category.cs">
@@ -126,6 +126,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>OnlineShoppingCart.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Order.cs">
+      <DependentUpon>OnlineShoppingCart.tt</DependentUpon>
+    </Compile>
+    <Compile Include="OrderItem.cs">
+      <DependentUpon>OnlineShoppingCart.tt</DependentUpon>
     </Compile>
     <Compile Include="Product.cs">
       <DependentUpon>OnlineShoppingCart.tt</DependentUpon>

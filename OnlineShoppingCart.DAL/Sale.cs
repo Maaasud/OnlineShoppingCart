@@ -14,11 +14,11 @@ namespace OnlineShoppingCart.DAL
     
     public partial class Sale
     {
-        public int SalesID { get; set; }
+        public int SaleID { get; set; }
         public int ProductID { get; set; }
         public int UserID { get; set; }
-        public Nullable<int> UnitSold { get; set; }
-        public Nullable<int> Amount { get; set; }
+        public Nullable<int> Quantity { get; set; }
+        public Nullable<int> TotalPrice { get; set; }
         public System.DateTime DateCreated { get; set; }
         public Nullable<System.DateTime> DateModified { get; set; }
         public Nullable<System.DateTime> DateDeleted { get; set; }

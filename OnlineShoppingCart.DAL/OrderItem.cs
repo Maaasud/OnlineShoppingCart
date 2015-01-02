@@ -12,23 +12,17 @@ namespace OnlineShoppingCart.DAL
     using System;
     using System.Collections.Generic;
     
-    public partial class CreditCard
+    public partial class OrderItem
     {
-        public CreditCard()
-        {
-            this.Users = new HashSet<Users>();
-        }
-    
-        public int CreditCardID { get; set; }
-        public string CardNumber { get; set; }
-        public System.DateTime ExpirationDate { get; set; }
-        public string CSC { get; set; }
-        public int CardTypeID { get; set; }
+        public int OrderItemID { get; set; }
+        public int OrderID { get; set; }
+        public int ProductID { get; set; }
+        public Nullable<int> Quantity { get; set; }
         public System.DateTime DateCreated { get; set; }
         public Nullable<System.DateTime> DateModified { get; set; }
         public Nullable<System.DateTime> DateDeleted { get; set; }
     
-        public virtual CardType CardType { get; set; }
-        public virtual ICollection<Users> Users { get; set; }
+        public virtual Order Order { get; set; }
+        public virtual Product Product { get; set; }
     }
 }

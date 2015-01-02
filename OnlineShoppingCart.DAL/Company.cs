@@ -24,6 +24,8 @@ namespace OnlineShoppingCart.DAL
         public string CompanyName { get; set; }
         public int ContactID { get; set; }
         public int AddressID { get; set; }
+        public string Logo { get; set; }
+        public Nullable<int> RateStar { get; set; }
         public System.DateTime DateCreated { get; set; }
         public Nullable<System.DateTime> DateModified { get; set; }
         public Nullable<System.DateTime> DateDeleted { get; set; }

@@ -18,7 +18,6 @@ namespace OnlineShoppingCart.DAL
         public OnlineShoppingCartDbContext()
             : base("name=OnlineShoppingCartDbContext")
         {
-
         }
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -27,17 +26,19 @@ namespace OnlineShoppingCart.DAL
         }
     
         public virtual DbSet<Address> Address { get; set; }
-        public virtual DbSet<Cart> Cart { get; set; }
+        public virtual DbSet<CardType> CardType { get; set; }
         public virtual DbSet<Category> Category { get; set; }
         public virtual DbSet<Company> Company { get; set; }
         public virtual DbSet<Contact> Contact { get; set; }
         public virtual DbSet<CreditCard> CreditCard { get; set; }
+        public virtual DbSet<Order> Order { get; set; }
+        public virtual DbSet<OrderItem> OrderItem { get; set; }
         public virtual DbSet<Product> Product { get; set; }
-        public virtual DbSet<Sale> Sale { get; set; }
         public virtual DbSet<Setting> Setting { get; set; }
         public virtual DbSet<SubCategory> SubCategory { get; set; }
         public virtual DbSet<UserRole> UserRole { get; set; }
         public virtual DbSet<Users> Users { get; set; }
         public virtual DbSet<UserType> UserType { get; set; }
+        public virtual DbSet<Sale> Sale { get; set; }
     }
 }

@@ -16,7 +16,7 @@ namespace OnlineShoppingCart.DAL
     {
         public Users()
         {
-            this.Cart = new HashSet<Cart>();
+            this.Order = new HashSet<Order>();
             this.Product = new HashSet<Product>();
             this.Sale = new HashSet<Sale>();
         }
@@ -24,6 +24,7 @@ namespace OnlineShoppingCart.DAL
         public int UserID { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string Email { get; set; }
         public string Password { get; set; }
         public Nullable<int> ContactID { get; set; }
         public Nullable<int> CreditCardID { get; set; }
@@ -37,13 +38,13 @@ namespace OnlineShoppingCart.DAL
         public Nullable<System.DateTime> DateDeleted { get; set; }
     
         public virtual Address Address { get; set; }
-        public virtual ICollection<Cart> Cart { get; set; }
         public virtual Company Company { get; set; }
         public virtual Contact Contact { get; set; }
         public virtual CreditCard CreditCard { get; set; }
+        public virtual ICollection<Order> Order { get; set; }
         public virtual ICollection<Product> Product { get; set; }
-        public virtual ICollection<Sale> Sale { get; set; }
         public virtual UserRole UserRole { get; set; }
         public virtual UserType UserType { get; set; }
+        public virtual ICollection<Sale> Sale { get; set; }
     }
 }

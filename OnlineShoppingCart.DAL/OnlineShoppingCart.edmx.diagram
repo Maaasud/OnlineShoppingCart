@@ -5,37 +5,41 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="592e0b225b4744b6bf600926f0b559ad" Name="Diagram1">
-        <EntityTypeShape EntityType="OnlineShoppingCart.DAL.Address" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineShoppingCart.DAL.Cart" Width="1.5" PointX="10.5" PointY="6.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineShoppingCart.DAL.Category" Width="1.5" PointX="3" PointY="11.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineShoppingCart.DAL.Company" Width="1.5" PointX="3" PointY="6.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineShoppingCart.DAL.Contact" Width="1.5" PointX="0.75" PointY="6.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineShoppingCart.DAL.CreditCard" Width="1.5" PointX="6" PointY="1.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineShoppingCart.DAL.Product" Width="1.5" PointX="5.25" PointY="5.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineShoppingCart.DAL.Sale" Width="1.5" PointX="13.5" PointY="6.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineShoppingCart.DAL.Setting" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineShoppingCart.DAL.SubCategory" Width="1.5" PointX="3" PointY="14.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineShoppingCart.DAL.UserRole" Width="1.5" PointX="6" PointY="11.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineShoppingCart.DAL.Users" Width="1.5" PointX="8.25" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="OnlineShoppingCart.DAL.UserType" Width="1.5" PointX="6" PointY="14.75" IsExpanded="true" />
-        <AssociationConnector Association="OnlineShoppingCart.DAL.FK__Company__Address__29572725" ManuallyRouted="false" />
-        <AssociationConnector Association="OnlineShoppingCart.DAL.FK__Users__CreditCar__300424B4" ManuallyRouted="false" />
-        <AssociationConnector Association="OnlineShoppingCart.DAL.FK__Cart__ProductID__48CFD27E" ManuallyRouted="false" />
-        <AssociationConnector Association="OnlineShoppingCart.DAL.FK__Cart__UserID__49C3F6B7" ManuallyRouted="false" />
-        <AssociationConnector Association="OnlineShoppingCart.DAL.FK__Product__Categor__3A81B327" ManuallyRouted="false" />
-        <AssociationConnector Association="OnlineShoppingCart.DAL.FK__SubCatego__Categ__0AD2A005" ManuallyRouted="false" />
-        <AssociationConnector Association="OnlineShoppingCart.DAL.FK__Company__Contact__286302EC" ManuallyRouted="false" />
-        <AssociationConnector Association="OnlineShoppingCart.DAL.FK__Product__Company__398D8EEE" ManuallyRouted="false" />
-        <AssociationConnector Association="OnlineShoppingCart.DAL.FK__Users__CompanyID__31EC6D26" ManuallyRouted="false" />
-        <AssociationConnector Association="OnlineShoppingCart.DAL.FK__Users__ContactID__2F10007B" ManuallyRouted="false" />
-        <AssociationConnector Association="OnlineShoppingCart.DAL.FK__Users__AddressID__30F848ED" ManuallyRouted="false" />
-        <AssociationConnector Association="OnlineShoppingCart.DAL.FK__Product__SubCate__3B75D760" ManuallyRouted="false" />
-        <AssociationConnector Association="OnlineShoppingCart.DAL.FK__Product__UserID__3C69FB99" ManuallyRouted="false" />
-        <AssociationConnector Association="OnlineShoppingCart.DAL.FK__Sale__ProductID__4222D4EF" ManuallyRouted="false" />
-        <AssociationConnector Association="OnlineShoppingCart.DAL.FK__Sale__UserID__4316F928" ManuallyRouted="false" />
-        <AssociationConnector Association="OnlineShoppingCart.DAL.FK__Users__UserRoleI__33D4B598" ManuallyRouted="false" />
-        <AssociationConnector Association="OnlineShoppingCart.DAL.FK__Users__UserTypeI__32E0915F" ManuallyRouted="false" />
-      </Diagram>
+        <EntityTypeShape EntityType="OnlineShoppingCart.DAL.Address" Width="1.5" PointX="0.75" PointY="2.25" />
+        <EntityTypeShape EntityType="OnlineShoppingCart.DAL.CardType" Width="1.5" PointX="1.5" PointY="10.125" />
+        <EntityTypeShape EntityType="OnlineShoppingCart.DAL.Category" Width="1.5" PointX="6.75" PointY="15" />
+        <EntityTypeShape EntityType="OnlineShoppingCart.DAL.Company" Width="1.5" PointX="9" PointY="6.25" />
+        <EntityTypeShape EntityType="OnlineShoppingCart.DAL.Contact" Width="1.5" PointX="0.75" PointY="6.625" />
+        <EntityTypeShape EntityType="OnlineShoppingCart.DAL.CreditCard" Width="1.5" PointX="3.75" PointY="9.75" />
+        <EntityTypeShape EntityType="OnlineShoppingCart.DAL.Order" Width="1.5" PointX="8.25" PointY="10.625" />
+        <EntityTypeShape EntityType="OnlineShoppingCart.DAL.OrderItem" Width="1.5" PointX="13.5" PointY="11" />
+        <EntityTypeShape EntityType="OnlineShoppingCart.DAL.Product" Width="1.5" PointX="11.25" PointY="5.375" />
+        <EntityTypeShape EntityType="OnlineShoppingCart.DAL.Setting" Width="1.5" PointX="6.375" PointY="0.75" />
+        <EntityTypeShape EntityType="OnlineShoppingCart.DAL.SubCategory" Width="1.5" PointX="9" PointY="24.375" />
+        <EntityTypeShape EntityType="OnlineShoppingCart.DAL.UserRole" Width="1.5" PointX="3.75" PointY="3.375" />
+        <EntityTypeShape EntityType="OnlineShoppingCart.DAL.Users" Width="1.5" PointX="6" PointY="5.25" />
+        <EntityTypeShape EntityType="OnlineShoppingCart.DAL.UserType" Width="1.5" PointX="3.75" PointY="6.5" />
+        <AssociationConnector Association="OnlineShoppingCart.DAL.FK__Company__Address__2F10007B" />
+        <AssociationConnector Association="OnlineShoppingCart.DAL.FK__Users__CreditCar__35BCFE0A" />
+        <AssociationConnector Association="OnlineShoppingCart.DAL.FK__CreditCar__CardT__1A14E395" />
+        <AssociationConnector Association="OnlineShoppingCart.DAL.FK__Product__Categor__403A8C7D" />
+        <AssociationConnector Association="OnlineShoppingCart.DAL.FK__SubCatego__Categ__0AD2A005" />
+        <AssociationConnector Association="OnlineShoppingCart.DAL.FK__Company__Contact__2E1BDC42" />
+        <AssociationConnector Association="OnlineShoppingCart.DAL.FK__Product__Company__3F466844" />
+        <AssociationConnector Association="OnlineShoppingCart.DAL.FK__Users__CompanyID__37A5467C" />
+        <AssociationConnector Association="OnlineShoppingCart.DAL.FK__Users__ContactID__34C8D9D1" />
+        <AssociationConnector Association="OnlineShoppingCart.DAL.FK__Users__AddressID__36B12243" />
+        <AssociationConnector Association="OnlineShoppingCart.DAL.FK__Order__UserID__4E88ABD4" />
+        <AssociationConnector Association="OnlineShoppingCart.DAL.FK__OrderItem__Order__5441852A" />
+        <AssociationConnector Association="OnlineShoppingCart.DAL.FK__OrderItem__Produ__5535A963" />
+        <AssociationConnector Association="OnlineShoppingCart.DAL.FK__Product__SubCate__412EB0B6" />
+        <AssociationConnector Association="OnlineShoppingCart.DAL.FK__Product__UserID__4222D4EF" />
+        <AssociationConnector Association="OnlineShoppingCart.DAL.FK__Users__UserRoleI__398D8EEE" />
+        <AssociationConnector Association="OnlineShoppingCart.DAL.FK__Users__UserTypeI__38996AB5" />
+        <EntityTypeShape EntityType="OnlineShoppingCart.DAL.Sale" Width="1.5" PointX="13.5" PointY="6.625" />
+        <AssociationConnector Association="OnlineShoppingCart.DAL.FK__Sale__ProductID__47DBAE45" />
+        <AssociationConnector Association="OnlineShoppingCart.DAL.FK__Sale__UserID__48CFD27E" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

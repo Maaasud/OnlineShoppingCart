@@ -6,27 +6,19 @@ namespace OnlineShoppingCart.BAL.Repository
     using System.Linq;
     using System.Web;
     using OnlineShoppingCart.DAL;
+    using System.ComponentModel.DataAnnotations;
 
-    public class SaleRepository
+    public class CardTypeRepository : CardType
     {
-		public int SalesID { get; set; }
-		
-        public int ProductID { get; set; }
+        public int CardTypeID { get; set; }
 
-        public Product Product { get; set; }
-		
-        public int UserID { get; set; }
+        [Required(ErrorMessage = "You can't leave this empty.")]
+        public string Type { get; set; }
 
-        public Users User { get; set; }
-
-        public int Quantity { get; set; }
-
-        public int TotalPrice { get; set; }
-		
         public DateTime DateCreated { get; set; }
-		
+
         public DateTime DateModified { get; set; }
-		
+
         public DateTime DateDeleted { get; set; }
     }
 }

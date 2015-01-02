@@ -16,7 +16,7 @@ namespace OnlineShoppingCart.DAL
     {
         public Product()
         {
-            this.Cart = new HashSet<Cart>();
+            this.OrderItem = new HashSet<OrderItem>();
             this.Sale = new HashSet<Sale>();
         }
     
@@ -31,14 +31,15 @@ namespace OnlineShoppingCart.DAL
         public Nullable<int> QunatityInStock { get; set; }
         public Nullable<int> UnitPrice { get; set; }
         public string Image { get; set; }
+        public Nullable<double> Size { get; set; }
         public Nullable<bool> IsPosted { get; set; }
         public System.DateTime DateCreated { get; set; }
         public Nullable<System.DateTime> DateModified { get; set; }
         public Nullable<System.DateTime> DateDeleted { get; set; }
     
-        public virtual ICollection<Cart> Cart { get; set; }
         public virtual Category Category { get; set; }
         public virtual Company Company { get; set; }
+        public virtual ICollection<OrderItem> OrderItem { get; set; }
         public virtual SubCategory SubCategory { get; set; }
         public virtual Users Users { get; set; }
         public virtual ICollection<Sale> Sale { get; set; }
